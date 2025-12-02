@@ -1,0 +1,33 @@
+/* Estilo base */
+.button {
+  display: inline-block;
+  width: 100%;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 2px solid var(--color-border);
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+/* Primary */
+.primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+}
+
+.primary:hover {
+  background-color: var(--color-hover-primary);
+}
+
+/* Secondary */
+.secondary {
+  background-color: var(--color-terceary);
+  color: var(--color-text-black);
+}
+
+.secondary:hover {
+  background-color: var(--color-hover-terceary);
+}

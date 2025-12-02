@@ -1,0 +1,17 @@
+:root {
+    --color-primary: #048200;
+    --color-secondary: #262626;
+    --color-terceary: #e8e8e8;
+    --color-neutral: #747474;
+    --color-border: #00000080;
+    --color-fill: #0a0a0a;
+    --color-bg-nav: #f9f9f9;
+    --color-bg-card: #1f1f1f3a;
+    --color-bg-card-hover: #1f1f1f83;
+    --color-text-white: #f1f1f1;
+    --color-text-black: #121212;
+    --color-hover-primary: #036700;
+    --color-hover-terceary: #cdcdcd;
+    --color-hover-link: #1e851a;
+    --color-select-focus: #0cec04;
+}

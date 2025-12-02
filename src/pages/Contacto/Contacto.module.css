@@ -1,0 +1,33 @@
+.formulario {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.formulario__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    padding: 20px 16px;
+}
+
+@media (min-width: 960px) {
+
+    .formulario__container {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 80px 40px;
+    }
+
+    .formulario__header {
+        width: 30%;
+        text-align: start;
+    }
+
+}

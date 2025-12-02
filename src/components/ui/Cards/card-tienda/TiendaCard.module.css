@@ -1,0 +1,86 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 240px;
+    gap: 8px;
+    background-color: var(--color-bg-card);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.card:hover {
+    background-color: var(--color-bg-card-hover);
+    box-shadow: 2px 2px 10px 10px var(--color-bg-card);
+}
+
+.card__img {
+    height: 100%;
+    transition: all 0.3s;
+}
+
+.card__img:hover {
+    transform: scale(1.1);
+}
+
+.card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+}
+
+.card__text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.color__label {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.color__circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 2px solid transparent;
+    transition: 0.2s;
+}
+
+/* Select */
+.black {
+    background: #000;
+}
+
+.white {
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+.gray {
+    background: #999;
+}
+
+/* Select focus */
+.selected {
+    border: 2px solid var(--color-select-focus);
+}
+
+/* Ocultar radio default */
+input[type="radio"] {
+    display: none;
+}
+
+@media (min-width: 960px) {
+
+    .card {
+        min-width: 210px;
+        max-width: 290px;
+    }
+}

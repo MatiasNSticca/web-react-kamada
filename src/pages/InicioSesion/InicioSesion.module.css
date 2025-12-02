@@ -1,0 +1,25 @@
+.iniciosesion__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    padding: 20px 16px;
+}
+
+.iniciosesion__header {
+    text-align: center;
+}
+
+@media (min-width: 960px) {
+
+    .iniciosesion__container {
+        width: 100%;
+        gap: 24px;
+        padding: 80px 40px;
+    }
+
+    .iniciosesion__container a {
+        width: auto;
+    }
+}
