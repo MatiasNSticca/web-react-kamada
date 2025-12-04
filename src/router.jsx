@@ -13,6 +13,7 @@ import Error404 from "./pages/Error404/Error404";
 
 import InicioSesion from "./pages/InicioSesion/InicioSesion"
 import Registro from "./pages/Registro/Registro"
+import CreateProductPage from "./pages/CrearProducto/CreateProductPage"
 
 export const router = createBrowserRouter([
     {
@@ -46,13 +47,17 @@ export const router = createBrowserRouter([
             {
                 path: "*",
                 element: <Error404 />
-            },
+            }
         ]
     },
-
+    
     {
         element: <EmptyLayout />,
         children: [
+            {
+                path: "products/create",
+                element: <CreateProductPage />,
+            },
             {
                 path: "registro",
                 element: <Registro />

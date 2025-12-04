@@ -1,0 +1,42 @@
+.crearproducto__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    padding: 20px 16px;
+}
+
+.crearproducto__header {
+    text-align: center;
+}
+
+.crearproducto__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form__content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.input__textarea {
+    display: flex;
+    flex-direction: column;
+}
+
+.crearproducto__container label {
+    color: var(--color-text-white);
+}
+
+@media (min-width: 600px) {
+
+    .crearproducto__form,
+    .crearproducto__container a{
+        width: 50%;
+    }
+}

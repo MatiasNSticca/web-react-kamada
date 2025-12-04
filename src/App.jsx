@@ -9,6 +9,8 @@ import Galeria from "./pages/Galeria/Galeria"
 import Nosotros from "./pages/Nosotros/Nosotros"
 import Contacto from "./pages/Contacto/Contacto"
 
+import CreateProductPage from "./pages/CrearProducto/CreateProductPage"
+
 import Registro from "./pages/Registro/Registro"
 import InicioSesion from "./pages/InicioSesion/InicioSesion"
 import Error404 from "./pages/Error404/Error404"
@@ -29,6 +31,7 @@ export default function App() {
       <Route element={<EmptyLayout />}>
         <Route path="/registro" element={<Registro />} />
         <Route path="/inicio-sesion" element={<InicioSesion />} />
+        <Route path="/products/create" element={<CreateProductPage />} />
         <Route path="*" element={<Error404 />} />
       </Route>
     </Routes>
