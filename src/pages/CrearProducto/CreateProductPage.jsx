@@ -4,17 +4,19 @@ import style from "./CreateProductPage.module.css"
 import Input from "../../components/ui/Inputs/Input"
 import { statusData, statusTranslations  } from "../../utils/statusTranslations"
 import Button from "../../components/ui/Button/Button"
+import usePostProduct from "../../hooks/usePostProduct"
 
 function CreateProductPage() {
+
+    const { error, fetchProduct } = usePostProduct()
 
     const [form, setForm] = useState({
         name: "",
         description: "",
         image: "",
-        placeholder: "",
         status: "AVAILABLE",
         price: 0,
-        stock: 0
+        stock: 0,
     })
 
     const handleInputChange = (e) => {
@@ -25,10 +27,13 @@ function CreateProductPage() {
         })
     }
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault()
+        const success = await fetchProduct(form)
+        if(success){
+            console.log("Creado exitosamente")
+        }
         console.log(form)
-        // const success = null
     }
 
   return (
@@ -64,6 +69,9 @@ function CreateProductPage() {
 
                 <Input label="Stock" LabelId="stock" type="number" onChange={handleInputChange} value={form.stock} isRequired={true} />
             </div>
+
+            {/* error puede ser null (falsy). si hay error lo muestra en el formulario */}
+            { error && <p> {error.message || error} </p> }
 
             <Button type="submit" variant="primary" onChange={handleFormSubmit}>
                 Crear producto
