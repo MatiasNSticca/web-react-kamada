@@ -3,9 +3,9 @@ import { API_URL } from "../config.js"
 
 function usePostProduct() {
 
-    const [error, setError] = useState()
+    const [error, setError] = useState(null)
 
-    const fetchProduct = async () => {
+    const fetchProduct = async (formData) => {
         setError(null)
 
         try {
@@ -16,7 +16,7 @@ function usePostProduct() {
                     "Content-type": "application/json"
                 },
                 // body: es el cuerop del request y es por donde viaja la informacion
-                body: JSON.stringify(FormData)
+                body: JSON.stringify(formData)
             })
             // si no salio bien el request
             // este IF chequea un error de la API/Back

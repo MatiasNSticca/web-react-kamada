@@ -56,9 +56,9 @@ function Eventos() {
             />
           </div>
 
-          <Button as={Link} to="/eventos" variant="primary">
+          {/* <Button as={Link} to="/eventos" variant="primary">
             Ver eventos
-          </Button>
+          </Button> */}
         </div>
       </section>
     </>

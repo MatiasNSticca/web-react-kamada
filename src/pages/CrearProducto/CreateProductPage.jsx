@@ -33,7 +33,6 @@ function CreateProductPage() {
         if(success){
             console.log("Creado exitosamente")
         }
-        console.log(form)
     }
 
   return (
@@ -79,7 +78,7 @@ function CreateProductPage() {
         </form>
 
         <Button as={Link} to="/" variant="secondary">
-            Volver a productos
+            Volver a tienda
         </Button>
     </div>
   )
