@@ -37,9 +37,10 @@ function TiendaCard() {
           <div className={style.card__content}>
             <div className={style.card__text}>
               <h5 className={style.card__title}>{product.name}</h5>
-              <p className={style.card__pricing}>{product.name}</p>
+              <p className={style.card__pricing}>${product.price}</p>
               <p className={style.card__descripton}>{product.description}</p>
-              <p className={style.card__descripton}>{product.stock}</p>
+              <p className={style.card__descripton}>{product.status}</p>
+              <p className={style.card__descripton}>Stock {product.stock}</p>
             </div>
 
             <div className={style.card__color}>
