@@ -1,26 +1,23 @@
 import React, { useState } from "react";
-import useGetProduct from "../../../../hooks/useGetProduct";
 import style from "./TiendaCard.module.css";
 import Button from "../../Button/Button";
+import useDeleteProduct from "../../../../hooks/useDeleteProduct";
 
-function TiendaCard() {
+function TiendaCard( { products = [] } ) {
+
+  const {error, deleteProduct} = useDeleteProduct()
+
+  const handleDeleteProduct = async (e, productId) => {
+    e.stopPropagation()
+    if(window.confirm("¿Estas seguro que queres eliminar el producto?")) {
+      const response = await deleteProduct(productId)
+      if(response) {
+        window.location.reload()
+      }
+    }
+  }
+
   const [selectedColor, setSelectedColor] = useState("black");
-
-  const { loading, products, error } = useGetProduct();
-
-  if (error) {
-    return <h2>{error.message || "Error al cargar productos"}</h2>;
-  }
-
-  if (loading) {
-    return <h2>Cargando productos...</h2>;
-  }
-
-  //  Empty state (estado vacio)
-  //  es una situacion donde no hay productos
-  if (!products || products.length === 0) {
-    return <h2>No hay productos disponibles</h2>;
-  }
 
   const colores = [
     { value: "black", label: "Negro" },
@@ -61,10 +58,12 @@ function TiendaCard() {
               ))}
             </div>
 
-            <Button variant="secondary">Comprar</Button>
+            <Button variant="primary">Comprar</Button>
+            <Button onClick={ (e) => handleDeleteProduct(e, product.id) } variant="secondary">Eliminar</Button>
           </div>
         </div>
       ))}
+      { error && <p> {error.message || error} </p> }
     </div>
   );
 }
