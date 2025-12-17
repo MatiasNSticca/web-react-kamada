@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import style from "./TiendaCard.module.css";
 import Button from "../../Button/Button";
 import useDeleteProduct from "../../../../hooks/useDeleteProduct";
+import { Navigate, useNavigate } from "react-router-dom";
+import { statusTranslations } from "../../../../utils/statusTranslations";
 
 function TiendaCard( { products = [] } ) {
+
+  const navigate = useNavigate();
 
   const {error, deleteProduct} = useDeleteProduct()
 
@@ -15,6 +19,11 @@ function TiendaCard( { products = [] } ) {
         window.location.reload()
       }
     }
+  }
+
+  const handleEditProduct = (e, productId) => {
+    e.stopPropagation()
+    navigate(`/products/edit/${productId}`)
   }
 
   const [selectedColor, setSelectedColor] = useState("black");
@@ -36,7 +45,7 @@ function TiendaCard( { products = [] } ) {
               <h5 className={style.card__title}>{product.name}</h5>
               <p className={style.card__pricing}>${product.price}</p>
               <p className={style.card__descripton}>{product.description}</p>
-              <p className={style.card__descripton}>{product.status}</p>
+              <p className={style.card__descripton_status}>{statusTranslations[product.status] || product.status}</p>
               <p className={style.card__descripton}>Stock {product.stock}</p>
             </div>
 
@@ -60,6 +69,7 @@ function TiendaCard( { products = [] } ) {
 
             <Button variant="primary">Comprar</Button>
             <Button onClick={ (e) => handleDeleteProduct(e, product.id) } variant="secondary">Eliminar</Button>
+            <Button onClick={ (e) => handleEditProduct(e, product.id) } variant="secondary">✏️ Editar</Button>
           </div>
         </div>
       ))}

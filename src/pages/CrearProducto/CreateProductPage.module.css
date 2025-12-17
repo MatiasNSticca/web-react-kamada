@@ -24,6 +24,14 @@
     gap: 12px;
 }
 
+.img__preview {
+    height: 200px;
+    object-fit: contain;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background-color: var(--color-bg-card-hover);
+}
+
 .input__textarea {
     display: flex;
     flex-direction: column;

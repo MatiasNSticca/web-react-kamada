@@ -108,6 +108,8 @@ function EditProductPage() {
             placeholder="URL"
           />
 
+          <img className={style.img__preview} src={form.image} alt={form.name} />
+
           <div className={style.input__textarea}>
             <label htmlFor="description">Descripcion</label>
             <textarea
@@ -166,7 +168,7 @@ function EditProductPage() {
         </Button>
       </form>
 
-      <Button as={Link} to="/" variant="secondary">
+      <Button as={Link} to="/tienda" variant="secondary">
         Volver a tienda
       </Button>
     </div>

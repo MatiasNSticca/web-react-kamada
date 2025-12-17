@@ -43,9 +43,18 @@
     padding: 16px;
 }
 
+.card__descripton_status {
+    background-color: var(--color-neutral);
+    font-size: 14px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    width: fit-content;
+}
+
 .card__text {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 4px;
 }
 
