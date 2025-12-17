@@ -12,9 +12,10 @@ import Contacto from "./pages/Contacto/Contacto"
 import Error404 from "./pages/Error404/Error404";
 
 import InicioSesion from "./pages/InicioSesion/InicioSesion"
-import Registro from "./pages/Registro/Registro"
 import CreateProductPage from "./pages/CrearProducto/CreateProductPage"
 import EditProductPage from "./pages/CrearProducto/EditProductPage."
+import RegisterUserPage from "./pages/Registro/RegisterUserPage"
+import User from "./pages/Users/User"
 
 export const router = createBrowserRouter([
     {
@@ -65,7 +66,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: "registro",
-                element: <Registro />
+                element: <RegisterUserPage />
+            },
+            {
+                path: "users",
+                element: <User />
             },
             {
                 path: "inicio-sesion",

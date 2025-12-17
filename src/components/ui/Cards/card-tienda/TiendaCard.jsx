@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import style from "./TiendaCard.module.css";
 import Button from "../../Button/Button";
-import useDeleteProduct from "../../../../hooks/useDeleteProduct";
+import useDeleteProduct from "../../../../hooks//products/useDeleteProduct";
 import { Navigate, useNavigate } from "react-router-dom";
 import { statusTranslations } from "../../../../utils/statusTranslations";
 

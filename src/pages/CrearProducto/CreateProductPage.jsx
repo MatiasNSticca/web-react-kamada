@@ -4,7 +4,7 @@ import style from "./CreateProductPage.module.css";
 import Input from "../../components/ui/Inputs/Input";
 import { statusData, statusTranslations } from "../../utils/statusTranslations";
 import Button from "../../components/ui/Button/Button";
-import usePostProduct from "../../hooks/usePostProduct";
+import usePostProduct from "../../hooks//products/usePostProduct";
 
 function CreateProductPage() {
   const { error, fetchProduct } = usePostProduct();

@@ -4,8 +4,8 @@ import style from "./CreateProductPage.module.css";
 import Input from "../../components/ui/Inputs/Input";
 import { statusData, statusTranslations } from "../../utils/statusTranslations";
 import Button from "../../components/ui/Button/Button";
-import usePutProduct from "../../hooks/usePutProduct";
-import useGetProductById from "../../hooks/useGetProductById";
+import usePutProduct from "../../hooks//products/usePutProduct";
+import useGetProductById from "../../hooks//products/useGetProductById";
 
 function EditProductPage() {
   // Path param -> permite a traves de un valor usar un id y buscar un registro especifico
