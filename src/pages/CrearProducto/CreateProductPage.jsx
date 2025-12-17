@@ -10,14 +10,16 @@ function CreateProductPage() {
 
     const { error, fetchProduct } = usePostProduct()
 
-    const [form, setForm] = useState({
+    const initialForm = {
         name: "",
         description: "",
         image: "",
         status: "AVAILABLE",
         price: 0,
         stock: 0,
-    })
+    }
+
+    const [form, setForm] = useState(initialForm)
 
     const handleInputChange = (e) => {
         const { name, value, type, } = e.target
@@ -32,6 +34,15 @@ function CreateProductPage() {
         const success = await fetchProduct(form)
         if(success){
             console.log("Creado exitosamente")
+        }
+
+        try {
+            alert("Producto creado exitosamente")
+
+            setForm(initialForm)
+        } catch (error) {
+            console.error(error)
+            alert("Error al crear el producto")
         }
     }
 

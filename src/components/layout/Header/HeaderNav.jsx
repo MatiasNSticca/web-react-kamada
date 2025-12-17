@@ -64,6 +64,12 @@ function HeaderNav({ isOpen, toggleMenu }) {
           </NavLink>
         </li>
 
+        <li className={style.nav__item}>
+          <NavLink to="products/create" className={getLinkClass} onClick={toggleMenu}>
+            Crear producto
+          </NavLink>
+        </li>
+
         {/* Botones login */}
         <li>
           <Button as={Link} to="/registro" variant="primary" onClick={toggleMenu}>

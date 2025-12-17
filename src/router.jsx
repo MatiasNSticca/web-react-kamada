@@ -14,6 +14,7 @@ import Error404 from "./pages/Error404/Error404";
 import InicioSesion from "./pages/InicioSesion/InicioSesion"
 import Registro from "./pages/Registro/Registro"
 import CreateProductPage from "./pages/CrearProducto/CreateProductPage"
+import EditProductPage from "./pages/CrearProducto/EditProductPage."
 
 export const router = createBrowserRouter([
     {
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
             {
                 path: "products/create",
                 element: <CreateProductPage />,
+            },
+            {
+                path: "products/edit/:id",
+                element: <EditProductPage />,
             },
             {
                 path: "registro",
