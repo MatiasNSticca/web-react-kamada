@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import style from ".//RegisterUserPage.module.css";
-import Input from "../../components/ui/Inputs/Input";
 import Button from "../../components/ui/Button/Button";
-import useRegiterUser from "../../hooks/users/useRegisterUser";
+import style from "./LoginUserPage.module.css";
+import Input from "../../components/ui/Inputs/Input";
+import useAuth from "../../hooks/users/useAuth";
+import useLogin from "../../hooks/users/useLogin";
 
-function RegisterUserPage() {
-  const { error, registerUser } = useRegiterUser();
+function LoginUserPage() {
   const navigate = useNavigate();
 
+  // autentica y guardar sesion
+  const { login: loginUser } = useAuth();
+  // llama al Back aseguradno las credenciales correctas
+  const { login, error } = useLogin();
+
   const initialForm = {
-    name: "",
     email: "",
     password: "",
   };
@@ -19,15 +23,14 @@ function RegisterUserPage() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const userData = await registerUser(form);
-    if (userData) {
-      // Guardar los datos del usuario en localStorage
-      localStorage.setItem("user", JSON.stringify(userData));
-      alert("Usuario creado");
-      // Redirigir a la página de usuarios
-      navigate('/users');
-    } else {
-      alert("Error al crear el usuario");
+
+    // manda al back las credenciales, si responde con un usuario es valido
+    const user = await login(form.email, form.password);
+
+    if (user) {
+      // si el user es valido guardamos en sessionStorage
+      loginUser(user);
+      navigate("/users");
     }
   };
 
@@ -36,32 +39,20 @@ function RegisterUserPage() {
     // del estado que modificamos obtenemos el name y value y esto setea el estado form
     setForm({
       ...form,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
-    <div className={style.registro__container}>
-      <div className={style.registro__header}>
-        <h2 className={style.registro__title}>Registrarme</h2>
-        <p className={style.registro__subtitle}>
-          Registrate en Kamada
-        </p>
+    <div className={style.login__container}>
+      <div className={style.login__header}>
+        <h2 className={style.login__title}>Inicio de sesion</h2>
+        <p className={style.login__subtitle}>Inicia sesion en Kamada</p>
       </div>
 
-      <form className={style.registro__form} onSubmit={handleFormSubmit}>
+      <form className={style.login__form} onSubmit={handleFormSubmit}>
         <div className={style.form__content}>
           <Input
-            label="Nombre"
-            LabelId="name"
-            type="text"
-            onChange={handleInputChange}
-            value={form.name}
-            isRequired={true}
-            placeholder="Tu nombre"
-          />
-
-         <Input
             label="Correo"
             LabelId="email"
             type="email"
@@ -70,9 +61,8 @@ function RegisterUserPage() {
             isRequired={true}
             placeholder="Tu correo"
           />
-          
 
-           <Input
+          <Input
             label="Contraseña"
             LabelId="password"
             type="password"
@@ -86,8 +76,8 @@ function RegisterUserPage() {
         {/* error puede ser null (falsy). si hay error lo muestra en el formulario */}
         {error && <p> {error.message || error} </p>}
 
-        <Button type="submit" variant="primary">
-          Registarme
+        <Button type="submit" as={Link} to="/users" variant="primary">
+          Iniciar sesion
         </Button>
       </form>
 
@@ -98,4 +88,4 @@ function RegisterUserPage() {
   );
 }
 
-export default RegisterUserPage;
+export default LoginUserPage;

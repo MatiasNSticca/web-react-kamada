@@ -5,7 +5,7 @@ function usePostProduct() {
 
     const [error, setError] = useState(null)
 
-    const fetchProduct = async (formData) => {
+    const postProduct = async (formData) => {
         setError(null)
 
         try {
@@ -33,7 +33,7 @@ function usePostProduct() {
             setError(error)
         }
     }
-    return { error, fetchProduct } 
+    return { error, postProduct } 
 }
 
 export default usePostProduct

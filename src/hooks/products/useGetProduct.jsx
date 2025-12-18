@@ -7,7 +7,7 @@ function useGetProduct() {
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    const fetchProducts = async () => {
+    const postProducts = async () => {
         setLoading(true)
         setError(null)
 
@@ -35,7 +35,7 @@ function useGetProduct() {
     }
     //  al ejecutar el hook, necesitamos hacer el llamado a la api
     useEffect(() => {
-        fetchProducts()
+        postProducts()
     }, [])
     //  cuando clave y valor se llaman igual se escribe una sola
     return { products, error, loading }   

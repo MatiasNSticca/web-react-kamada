@@ -3,7 +3,10 @@ import { Link, NavLink } from "react-router-dom"
 import style from "./HeaderNav.module.css"
 import Button from "../../ui/Button/Button"
 
+
 function HeaderNav({ isOpen, toggleMenu }) {
+
+
   const getLinkClass = ({ isActive }) =>
     `${style.nav__link} ${isActive ? style.active : ""}`;
 
@@ -65,7 +68,7 @@ function HeaderNav({ isOpen, toggleMenu }) {
         </li>
 
         <li className={style.nav__item}>
-          <NavLink to="products/create" className={getLinkClass} onClick={toggleMenu}>
+          <NavLink to="/products/create" className={getLinkClass} onClick={toggleMenu}>
             Crear producto
           </NavLink>
         </li>
@@ -78,8 +81,14 @@ function HeaderNav({ isOpen, toggleMenu }) {
         </li>
 
         <li>
-          <Button as={Link} to="/inicio-sesion" variant="secondary" onClick={toggleMenu}>
+          <Button as={Link} to="/login" variant="secondary" onClick={toggleMenu}>
             Iniciar sesión
+          </Button>
+        </li>
+
+        <li>
+          <Button as={Link} to="/" onClick={() => {toggleMenu(); }} variant="primary">
+            Cerrar sesion
           </Button>
         </li>
       </ul>

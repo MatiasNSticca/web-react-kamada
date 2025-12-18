@@ -1,13 +1,15 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import style from "./CreateProductPage.module.css";
 import Input from "../../components/ui/Inputs/Input";
 import { statusData, statusTranslations } from "../../utils/statusTranslations";
 import Button from "../../components/ui/Button/Button";
-import usePostProduct from "../../hooks//products/usePostProduct";
+import usePutProduct from "../../hooks/products/usePutProduct";
+import useGetProductById from "../../hooks/products/useGetProductById";
 
-function CreateProductPage() {
-  const { error, fetchProduct } = usePostProduct();
+function EditProductPage() {
+  // Path param -> permite a traves de un valor usar un id y buscar un registro especifico
+  const { id } = useParams();
 
   const initialForm = {
     name: "",
@@ -20,6 +22,36 @@ function CreateProductPage() {
 
   const [form, setForm] = useState(initialForm);
 
+  const {
+    error: errorProductById,
+    getProductById,
+    _loading,
+  } = useGetProductById();
+
+  useEffect(() => {
+    const loadProduct = async () => {
+      const response = await getProductById(id);
+      if (response) {
+        setForm({
+          name: response.name,
+          description: response.description,
+          status: response.status,
+          price: response.price,
+          stock: response.stock,
+          image: response.image,
+        });
+      }
+    };
+    if (id) {
+      loadProduct();
+    } else {
+      console.log("id:", id);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  const { error: putError, putProduct } = usePutProduct();
+
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
     setForm({
@@ -30,27 +62,27 @@ function CreateProductPage() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const success = await fetchProduct(form);
+    const success = await putProduct(id, form);
     if (success) {
       console.log("Creado exitosamente");
     }
 
     try {
-      alert("Producto creado exitosamente");
+      alert("Producto editado exitosamente");
 
       setForm(initialForm);
     } catch (error) {
       console.error(error);
-      alert("Error al crear el producto");
+      alert("Error al editar el producto");
     }
   };
 
   return (
     <div className={style.crearproducto__container}>
       <div className={style.crearproducto__header}>
-        <h2 className={style.crearprocuto__title}>Crear producto</h2>
+        <h2 className={style.crearprocuto__title}>Editar producto</h2>
         <p className={style.crearprocuto__subtitle}>
-          Añade un nuevo producto a tu tienda
+          Edita el producto de tu tienda
         </p>
       </div>
 
@@ -125,18 +157,18 @@ function CreateProductPage() {
         </div>
 
         {/* error puede ser null (falsy). si hay error lo muestra en el formulario */}
-        {error && <p> {error.message || error} </p>}
+        {errorProductById && (
+          <p> {errorProductById.message || errorProductById} </p>
+        )}
+
+        {putError && <p> {putError.message || putError} </p>}
 
         <Button type="submit" variant="primary" onChange={handleFormSubmit}>
-          Crear producto
+          Editar producto
         </Button>
       </form>
-
-      <Button as={Link} to="/tienda" variant="secondary">
-        Volver a tienda
-      </Button>
     </div>
   );
 }
 
-export default CreateProductPage;
+export default EditProductPage;

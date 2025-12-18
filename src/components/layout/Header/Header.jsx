@@ -8,11 +8,7 @@ function Header() {
 
   return (
     <header className="header">
-      <HeaderNav 
-        isOpen={isOpen} 
-        toggleMenu={() => setIsOpen(!isOpen)} 
-      />
-
+      <HeaderNav isOpen={isOpen} toggleMenu={() => setIsOpen(!isOpen)} />
       <Hero />
     </header>
   );

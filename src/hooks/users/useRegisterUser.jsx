@@ -10,7 +10,7 @@ function useRegiterUser() {
       const response = await fetch(`${API_URL}users`, {
         method: "POST",
         headers: {
-          "Content-type": "Application/json",
+          "Content-type": "application/json",
         },
         body: JSON.stringify(formData),
       });
