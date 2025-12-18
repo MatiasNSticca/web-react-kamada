@@ -2,10 +2,11 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom"
 import style from "./HeaderNav.module.css"
 import Button from "../../ui/Button/Button"
-
+import useAuth from "../../../hooks/users/useAuth"
 
 function HeaderNav({ isOpen, toggleMenu }) {
 
+  const { isAuthenticated, logout } = useAuth()
 
   const getLinkClass = ({ isActive }) =>
     `${style.nav__link} ${isActive ? style.active : ""}`;
@@ -67,30 +68,30 @@ function HeaderNav({ isOpen, toggleMenu }) {
           </NavLink>
         </li>
 
-        <li className={style.nav__item}>
+        { isAuthenticated && <li className={style.nav__item}>
           <NavLink to="/products/create" className={getLinkClass} onClick={toggleMenu}>
             Crear producto
           </NavLink>
-        </li>
+        </li>}
 
         {/* Botones login */}
-        <li>
+        { !isAuthenticated && <li>
           <Button as={Link} to="/registro" variant="primary" onClick={toggleMenu}>
             Registrarme
           </Button>
-        </li>
+        </li>}
 
-        <li>
+        { !isAuthenticated && <li>
           <Button as={Link} to="/login" variant="secondary" onClick={toggleMenu}>
             Iniciar sesión
           </Button>
-        </li>
+        </li>}
 
-        <li>
-          <Button as={Link} to="/" onClick={() => {toggleMenu(); }} variant="primary">
+        { isAuthenticated && <li>
+          <Button onClick={() => { logout(); toggleMenu(); }} variant="primary">
             Cerrar sesion
           </Button>
-        </li>
+        </li>}
       </ul>
     </nav>
   );

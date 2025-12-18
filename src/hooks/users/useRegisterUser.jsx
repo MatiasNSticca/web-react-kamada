@@ -5,12 +5,14 @@ function useRegiterUser() {
   const [error, setError] = useState(null);
 
   const registerUser = async (formData) => {
+
     try {
       setError(null);
+
       const response = await fetch(`${API_URL}users`, {
         method: "POST",
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -25,11 +27,13 @@ function useRegiterUser() {
       const { password: _, ...userMithoutPassword } = data;
 
       return userMithoutPassword;
+
     } catch (error) {
       setError("Error al registrar usuario", error);
       return null;
     }
   };
+  
   return { registerUser, error };
 }
 

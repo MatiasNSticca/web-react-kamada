@@ -4,9 +4,13 @@ import style from ".//RegisterUserPage.module.css";
 import Input from "../../components/ui/Inputs/Input";
 import Button from "../../components/ui/Button/Button";
 import useRegiterUser from "../../hooks/users/useRegisterUser";
+import useAuth from "../../hooks/users/useAuth";
 
 function RegisterUserPage() {
+
   const { error, registerUser } = useRegiterUser();
+  const { login } = useAuth()
+
   const navigate = useNavigate();
 
   const initialForm = {
@@ -19,15 +23,12 @@ function RegisterUserPage() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const userData = await registerUser(form);
-    if (userData) {
-      // Guardar los datos del usuario en localStorage
-      localStorage.setItem("user", JSON.stringify(userData));
-      alert("Usuario creado");
-      // Redirigir a la página de usuarios
-      navigate('/users');
-    } else {
-      alert("Error al crear el usuario");
+    console.log(e.target.value);
+    const success = await registerUser(form);
+    if(success) {
+      login(success)
+      alert("Usuario creado")
+      navigate("/users");
     }
   };
 

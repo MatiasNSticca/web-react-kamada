@@ -29,12 +29,12 @@
 @media (min-width: 960px) {
 
     .user {
+        width: 100%;
         justify-content: center;
-        width: 50%;
     }
 
     .user__container {
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
         width: 100%;
         padding: 80px 40px;

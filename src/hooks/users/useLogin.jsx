@@ -21,7 +21,8 @@ function useLogin() {
 
             const data = await response.json()
 
-            const user = data.find((user) => user.email.trim().toLowerCase() === email.trim().toLowerCase() && user.password.trim() === password.trim())
+            const user = data.find((user) => 
+                user.email.trim().toLowerCase() === email.trim().toLowerCase() && user.password.trim() === password.trim())
 
             if(!user) {
                 setError("Credenciales incorrectas")
@@ -29,6 +30,7 @@ function useLogin() {
             }
 
             const { password: _, ...userWithoutPassword } = user
+            
             return userWithoutPassword
 
         } catch (error) {

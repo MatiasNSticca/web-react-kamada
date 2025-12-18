@@ -29,14 +29,12 @@ function User() {
 
   return (
     <>
-
-      <div className={style.user}>
       <HeaderNav isOpen={isOpen} toggleMenu={() => setIsOpen(!isOpen)} />
+      <div className={style.user}>
         <div className={style.user__container}>
           <div className={style.user__header}>
             <h2 className={style.user__title}>¡Bienvenido a Kamada!</h2>
-            <p className={style.user__subtitle}>Usuario: {user.name}</p>
-            <p className={style.user__subtitle}>Correo: {user.email}</p>
+            <p className={style.user__subtitle}>Hola de nuevo 👋🏻</p>
           </div>
           <div className={style.user__btn}>
             <Button as={Link} to="/products/create" variant="primary">

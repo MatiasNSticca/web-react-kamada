@@ -30,6 +30,7 @@ function LoginUserPage() {
     if (user) {
       // si el user es valido guardamos en sessionStorage
       loginUser(user);
+      alert("Login!")
       navigate("/users");
     }
   };
@@ -41,6 +42,7 @@ function LoginUserPage() {
       ...form,
       [e.target.name]: e.target.value,
     });
+    console.log({name: e.target.name, value: e.target.value})
   };
 
   return (
@@ -76,7 +78,7 @@ function LoginUserPage() {
         {/* error puede ser null (falsy). si hay error lo muestra en el formulario */}
         {error && <p> {error.message || error} </p>}
 
-        <Button type="submit" as={Link} to="/users" variant="primary">
+        <Button type="submit" variant="primary">
           Iniciar sesion
         </Button>
       </form>
