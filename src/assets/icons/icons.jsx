@@ -1,13 +1,14 @@
 import { 
     faEnvelope,
-    faStore
+    faStore,
+    faBagShopping
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
     faYoutube, 
     faSpotify, 
     faFacebook,
-    faInstagram
+    faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 
 export const Icons = {
@@ -17,4 +18,5 @@ export const Icons = {
     tienda: faStore,
     facebook: faFacebook,
     instagram: faInstagram,
+    carrito: faBagShopping
 }

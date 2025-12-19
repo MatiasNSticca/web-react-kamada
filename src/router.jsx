@@ -1,4 +1,4 @@
-import { BrowserRouter, createBrowserRouter } from "react-router-dom"
+import { createBrowserRouter } from "react-router-dom"
 import Layout from "./components/layout/Layout"
 import EmptyLayout from "./components/layout/EmptyLayout"
 
@@ -8,6 +8,8 @@ import Tienda from "./pages/Tienda/Tienda"
 import Galeria from "./pages/Galeria/Galeria"
 import Nosotros from "./pages/Nosotros/Nosotros"
 import Contacto from "./pages/Contacto/Contacto"
+import Carrito from "./pages/Carrito/Carrito"
+
 
 import Error404 from "./pages/Error404/Error404";
 
@@ -45,6 +47,10 @@ export const router = createBrowserRouter([
             {
                 path: "contacto",
                 element: <Contacto />,
+            },
+             {
+                path: "carrito",
+                element: <Carrito />,
             },
             {
                 path: "*",

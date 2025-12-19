@@ -3,10 +3,16 @@ import { Link, NavLink } from "react-router-dom"
 import style from "./HeaderNav.module.css"
 import Button from "../../ui/Button/Button"
 import useAuth from "../../../hooks/users/useAuth"
+import { useCart } from "../../../contex/CartContext"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Icons } from "../../../assets/icons/icons"
+
 
 function HeaderNav({ isOpen, toggleMenu }) {
 
   const { isAuthenticated, logout } = useAuth()
+  const { getCartItemsCount } = useCart()
+  const cartCount = getCartItemsCount()
 
   const getLinkClass = ({ isActive }) =>
     `${style.nav__link} ${isActive ? style.active : ""}`;
@@ -68,6 +74,36 @@ function HeaderNav({ isOpen, toggleMenu }) {
             Contacto
           </NavLink>
         </li>}
+
+        
+          { !isAuthenticated && <li> 
+                      <NavLink to="/carrito" style={{ position: "relative" }}>
+                        <FontAwesomeIcon icon={Icons.carrito}/>
+                        {cartCount > 0 && 
+                            <span
+                              style={{
+                                position: "absolute",
+                                top: "-8px",
+                                right: "-8px",
+                                backgroundColor: "#ff4444",
+                                color: "white",
+                                borderRadius: "50%",
+                                width: "20px",
+                                height: "20px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: "12px",
+                              }}
+                            >
+                              {cartCount}
+                            </span>
+                          }
+                          
+                      </NavLink>
+                    </li>
+            }
+        
 
         { isAuthenticated && <li className={style.nav__item}>
           <NavLink to="/products/create" className={getLinkClass} onClick={toggleMenu}>

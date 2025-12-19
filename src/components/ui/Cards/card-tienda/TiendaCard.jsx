@@ -2,14 +2,48 @@ import React, { useState } from "react";
 import style from "./TiendaCard.module.css";
 import Button from "../../Button/Button";
 import useDeleteProduct from "../../../../hooks//products/useDeleteProduct";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { statusTranslations } from "../../../../utils/statusTranslations";
+import useAuth from "../../../../hooks/users/useAuth"
+import { CartProvider, useCart } from "../../../../contex/CartContext";
+
 
 function TiendaCard( { products = [] } ) {
 
   const navigate = useNavigate();
-
+  const { isAuthenticated } = useAuth()
+  const { addToCart } = useCart();
   const {error, deleteProduct} = useDeleteProduct()
+  const [cartError, setCartError] = useState(null);
+
+
+  const handleAddToCart = (e, product) => {
+    e.stopPropagation();
+    setCartError(null);
+
+    // if (!isAuthenticated) {
+    //   alert("Debes iniciar sesión para agregar productos al carrito");
+    //   navigate("/users/login");
+    //   return;
+    // }
+
+    if (product.status !== "AVAILABLE") {
+      setCartError("El producto no está disponible");
+      return;
+    }
+
+    if (product.stock <= 0) {
+      setCartError("No hay stock disponible");
+      return;
+    }
+
+    try {
+      addToCart(product, 1);
+      alert(`${product.name} agregado al carrito`);
+    } catch (error) {
+      setCartError(error.message);
+    }
+  };
 
   const handleDeleteProduct = async (e, productId) => {
     e.stopPropagation()
@@ -67,13 +101,15 @@ function TiendaCard( { products = [] } ) {
               ))}
             </div>
 
-            <Button variant="primary">Comprar</Button>
-            <Button onClick={ (e) => handleDeleteProduct(e, product.id) } variant="secondary">Eliminar</Button>
-            <Button onClick={ (e) => handleEditProduct(e, product.id) } variant="secondary">✏️ Editar</Button>
+              {/* VALIDACION: si el producto esta discontinuado o sin estado no se muestra comprar */}
+            { !isAuthenticated && <Button onClick={ (e) => handleAddToCart(e, product) } variant="primary">Agregar al carrito</Button>}
+            { isAuthenticated && <Button onClick={ (e) => handleEditProduct(e, product.id) } variant="primary">Editar</Button>}
+            { isAuthenticated && <Button onClick={ (e) => handleDeleteProduct(e, product.id) } variant="secondary">Eliminar</Button>}
           </div>
         </div>
       ))}
       { error && <p> {error.message || error} </p> }
+      { cartError && <p> {cartError.message || cartError} </p> }
     </div>
   );
 }
