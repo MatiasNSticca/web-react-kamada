@@ -32,17 +32,18 @@ function HeaderNav({ isOpen, toggleMenu }) {
 
       {/* Menú */}
       <ul className={`${style.nav__list} ${isOpen ? style["nav__list--open"] : ""}`}>
-        <li className={style.nav__item}>
+
+       { !isAuthenticated && <li className={style.nav__item}>
           <NavLink to="/" className={getLinkClass} end onClick={toggleMenu}>
             Inicio
           </NavLink>
-        </li>
+        </li>}
 
-        <li className={style.nav__item}>
+        { !isAuthenticated && <li className={style.nav__item}>
           <NavLink to="/eventos" className={getLinkClass} onClick={toggleMenu}>
             Eventos
           </NavLink>
-        </li>
+        </li>}
 
         <li className={style.nav__item}>
           <NavLink to="/tienda" className={getLinkClass} onClick={toggleMenu}>
@@ -50,23 +51,23 @@ function HeaderNav({ isOpen, toggleMenu }) {
           </NavLink>
         </li>
 
-        <li className={style.nav__item}>
+        { !isAuthenticated && <li className={style.nav__item}>
           <NavLink to="/galeria" className={getLinkClass} onClick={toggleMenu}>
             Galería
           </NavLink>
-        </li>
+        </li>}
 
-        <li className={style.nav__item}>
+        { !isAuthenticated && <li className={style.nav__item}>
           <NavLink to="/nosotros" className={getLinkClass} onClick={toggleMenu}>
             Nosotros
           </NavLink>
-        </li>
+        </li>}
 
-        <li className={style.nav__item}>
+        { !isAuthenticated && <li className={style.nav__item}>
           <NavLink to="/contacto" className={getLinkClass} onClick={toggleMenu}>
             Contacto
           </NavLink>
-        </li>
+        </li>}
 
         { isAuthenticated && <li className={style.nav__item}>
           <NavLink to="/products/create" className={getLinkClass} onClick={toggleMenu}>

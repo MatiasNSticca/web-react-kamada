@@ -108,7 +108,9 @@ function EditProductPage() {
             placeholder="URL"
           />
 
-          <img className={style.img__preview} src={form.image} alt={form.name} />
+          { form.image && ( 
+            <img className={style.img__preview} src={form.image} alt={form.name} />
+          )}
 
           <div className={style.input__textarea}>
             <label htmlFor="description">Descripcion</label>
