@@ -27,6 +27,7 @@
 @media (min-width: 960px) {
 
     .nosotros {
+        padding-top: 80px;
         justify-content: center;
     }
 

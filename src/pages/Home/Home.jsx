@@ -5,11 +5,14 @@ import Eventos from "../Eventos/Eventos";
 import Tienda from "../Tienda/Tienda";
 import Galeria from "../Galeria/Galeria";
 import Contacto from "../Contacto/Contacto";
+import Hero from "../../components/layout/Header/Hero";
 
 function Home() {
   return (
     <>
       <main>
+        <Hero />
+        
         <section className={style.eventos__preview}>
           <Eventos />
         </section>
