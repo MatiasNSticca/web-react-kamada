@@ -31,7 +31,10 @@ function LoginUserPage() {
     setLoading(false);
 
     if (result.success) {
-      navigate(from, { replace: true });
+      const destination = result.user?.role === "master_admin" || result.user?.role === "admin_medio" 
+        ? "/admin/productos" 
+        : from;
+      navigate(destination, { replace: true });
     } else {
       setError(result.error);
     }

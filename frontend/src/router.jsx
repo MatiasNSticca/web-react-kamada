@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 import Layout from "./components/layout/Layout"
 import EmptyLayout from "./components/layout/EmptyLayout"
+import AdminLayout from "./components/layout/AdminLayout/AdminLayout"
 
 import Home from "./pages/Home/Home"
 import Eventos from "./pages/Eventos/Eventos"
@@ -19,6 +20,7 @@ import RegisterUserPage from "./pages/Registro/RegisterUserPage"
 import LoginUserPage from "./pages/Login/LoginUserPage"
 import User from "./pages/Users/User"
 import AdminUsers from "./pages/AdminUsers/AdminUsers"
+import AdminProductos from "./pages/Admin/AdminProductos"
 import Perfil from "./pages/Perfil/Perfil"
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute"
 
@@ -66,52 +68,27 @@ export const router = createBrowserRouter([
         element: <EmptyLayout />,
         children: [
             {
-                path: "products/create",
-                element: (
-                    <ProtectedRoute requireAdmin={true}>
-                        <CreateProductPage />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "products/edit/:id",
-                element: (
-                    <ProtectedRoute requireAdmin={true}>
-                        <EditProductPage />
-                    </ProtectedRoute>
-                ),
-            },
-            {
                 path: "registro",
                 element: <RegisterUserPage />
-            },
-            {
-                path: "users",
-                element: (
-                    <ProtectedRoute requireMaster={true}>
-                        <User />
-                    </ProtectedRoute>
-                )
             },
             {
                 path: "login",
                 element: <LoginUserPage />
             },
-            {
-                path: "mi-perfil",
-                element: (
-                    <ProtectedRoute>
-                        <Perfil />
-                    </ProtectedRoute>
-                )
-            },
+        ]
+    },
+
+    // Rutas de Admin con Sidebar
+    {
+        element: (
+            <ProtectedRoute requireAdmin={true}>
+                <AdminLayout />
+            </ProtectedRoute>
+        ),
+        children: [
             {
                 path: "admin/productos",
-                element: (
-                    <ProtectedRoute requireAdmin={true}>
-                        <CreateProductPage />
-                    </ProtectedRoute>
-                )
+                element: <AdminProductos />
             },
             {
                 path: "admin/usuarios",
@@ -120,6 +97,10 @@ export const router = createBrowserRouter([
                         <AdminUsers />
                     </ProtectedRoute>
                 )
+            },
+            {
+                path: "admin/perfil",
+                element: <Perfil />
             },
         ]
     }
