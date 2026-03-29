@@ -8,18 +8,25 @@ function useDeleteUser() {
     try {
       setError(null);
 
-      const response = await fetch(`${API_URL}users/${userId}`, {
+      const token = localStorage.getItem("auth_token");
+
+      const response = await fetch(`${API_URL}/users/${userId}`, {
         method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
       });
 
       if (!response.ok) {
-        throw new Error("Error al eliminar usuario");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al eliminar usuario");
       }
 
       return true;
 
     } catch (error) {
-      setError("Error al eliminar usuario", error);
+      console.error("Error al eliminar usuario", error);
+      setError(error.message);
       return false;
     }
   };

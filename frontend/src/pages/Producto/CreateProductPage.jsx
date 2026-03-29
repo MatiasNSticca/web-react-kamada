@@ -1,24 +1,28 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import style from "./CreateProductPage.module.css";
 import Input from "../../components/ui/Inputs/Input";
-import { statusData, statusTranslations } from "../../utils/statusTranslations";
 import Button from "../../components/ui/Button/Button";
 import usePostProduct from "../../hooks//products/usePostProduct";
+import useGetCategories from "../../hooks/products/useGetCategories";
 
 function CreateProductPage() {
+  const navigate = useNavigate();
   const { error, postProduct } = usePostProduct();
+  const { categories } = useGetCategories();
 
   const initialForm = {
     name: "",
     description: "",
     image: "",
-    status: "AVAILABLE",
+    category: "",
     price: 0,
     stock: 0,
+    available: true,
   };
 
   const [form, setForm] = useState(initialForm);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
@@ -30,18 +34,26 @@ function CreateProductPage() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const success = await postProduct(form);
-    if (success) {
-      console.log("Creado exitosamente");
+    setSuccessMessage("");
+    
+    if (!form.category) {
+      alert("Por favor selecciona una categoría");
+      return;
     }
 
-    try {
-      alert("Producto creado exitosamente");
+    const productData = {
+      ...form,
+      price: Number(form.price),
+      stock: Number(form.stock),
+    };
 
+    const success = await postProduct(productData);
+    if (success) {
+      setSuccessMessage("Producto creado exitosamente!");
       setForm(initialForm);
-    } catch (error) {
-      console.error(error);
-      alert("Error al crear el producto");
+      setTimeout(() => {
+        navigate("/tienda");
+      }, 1500);
     }
   };
 
@@ -59,6 +71,7 @@ function CreateProductPage() {
           <Input
             label="Nombre"
             LabelId="name"
+            name="name"
             type="text"
             onChange={handleInputChange}
             value={form.name}
@@ -69,11 +82,12 @@ function CreateProductPage() {
           <Input
             label="Imagen"
             LabelId="image"
+            name="image"
             type="text"
             onChange={handleInputChange}
             value={form.image}
             isRequired={true}
-            placeholder="URL"
+            placeholder="URL de la imagen"
           />
 
           { form.image && ( 
@@ -92,16 +106,18 @@ function CreateProductPage() {
           </div>
 
           <div className={style.input__select}>
-            <label htmlFor="status">Estado</label>
+            <label htmlFor="category">Categoría *</label>
             <select
-              name="status"
-              value={form.status}
-              id="status"
+              name="category"
+              id="category"
+              value={form.category}
               onChange={handleInputChange}
+              required
             >
-              {statusData.map((status) => (
-                <option key={status} value={status}>
-                  {statusTranslations[status] || status}
+              <option value="">Selecciona una categoría</option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
                 </option>
               ))}
             </select>
@@ -110,6 +126,7 @@ function CreateProductPage() {
           <Input
             label="Precio"
             LabelId="price"
+            name="price"
             type="number"
             onChange={handleInputChange}
             value={form.price}
@@ -119,6 +136,7 @@ function CreateProductPage() {
           <Input
             label="Stock"
             LabelId="stock"
+            name="stock"
             type="number"
             onChange={handleInputChange}
             value={form.stock}
@@ -126,12 +144,23 @@ function CreateProductPage() {
           />
         </div>
 
-        {/* error puede ser null (falsy). si hay error lo muestra en el formulario */}
-        {error && <p> {error.message || error} </p>}
+        {successMessage && (
+          <p style={{ color: 'green', fontWeight: 'bold', padding: '10px', backgroundColor: '#d4edda', borderRadius: '5px' }}>
+            {successMessage}
+          </p>
+        )}
 
-        <Button type="submit" variant="primary" onChange={handleFormSubmit}>
-          Crear producto
-        </Button>
+        {error && <p style={{ color: 'red' }}>{error.message}</p>}
+
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button type="submit" variant="primary">
+            Crear producto
+          </Button>
+          
+          <Button as={Link} to="/tienda" variant="secondary">
+            Volver a la tienda
+          </Button>
+        </div>
       </form>
     </div>
   );

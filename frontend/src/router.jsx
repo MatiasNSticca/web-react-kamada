@@ -18,6 +18,7 @@ import EditProductPage from "./pages/Producto/EditProductPage."
 import RegisterUserPage from "./pages/Registro/RegisterUserPage"
 import LoginUserPage from "./pages/Login/LoginUserPage"
 import User from "./pages/Users/User"
+import AdminUsers from "./pages/AdminUsers/AdminUsers"
 import Perfil from "./pages/Perfil/Perfil"
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute"
 
@@ -116,7 +117,7 @@ export const router = createBrowserRouter([
                 path: "admin/usuarios",
                 element: (
                     <ProtectedRoute requireMaster={true}>
-                        <User />
+                        <AdminUsers />
                     </ProtectedRoute>
                 )
             },

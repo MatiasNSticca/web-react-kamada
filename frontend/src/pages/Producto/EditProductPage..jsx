@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import style from "./CreateProductPage.module.css";
 import Input from "../../components/ui/Inputs/Input";
-import { statusData, statusTranslations } from "../../utils/statusTranslations";
 import Button from "../../components/ui/Button/Button";
 import usePutProduct from "../../hooks/products/usePutProduct";
 import useGetProductById from "../../hooks/products/useGetProductById";
+import useGetCategories from "../../hooks/products/useGetCategories";
 
 function EditProductPage() {
-  // Path param -> permite a traves de un valor usar un id y buscar un registro especifico
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { categories } = useGetCategories();
 
   const initialForm = {
     name: "",
     description: "",
     image: "",
-    status: "AVAILABLE",
+    category: "",
     price: 0,
     stock: 0,
+    available: true,
   };
 
   const [form, setForm] = useState(initialForm);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const {
     error: errorProductById,
     getProductById,
-    _loading,
+    loading,
   } = useGetProductById();
 
   useEffect(() => {
@@ -33,19 +36,18 @@ function EditProductPage() {
       const response = await getProductById(id);
       if (response) {
         setForm({
-          name: response.name,
-          description: response.description,
-          status: response.status,
-          price: response.price,
-          stock: response.stock,
-          image: response.image,
+          name: response.name || "",
+          description: response.description || "",
+          image: response.image || "",
+          category: response.category?._id || response.category || "",
+          price: response.price || 0,
+          stock: response.stock || 0,
+          available: response.available ?? true,
         });
       }
     };
     if (id) {
       loadProduct();
-    } else {
-      console.log("id:", id);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -62,20 +64,31 @@ function EditProductPage() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const success = await putProduct(id, form);
-    if (success) {
-      console.log("Creado exitosamente");
+    setSuccessMessage("");
+    
+    if (!form.category) {
+      alert("Por favor selecciona una categoría");
+      return;
     }
 
-    try {
-      alert("Producto editado exitosamente");
+    const productData = {
+      ...form,
+      price: Number(form.price),
+      stock: Number(form.stock),
+    };
 
-      setForm(initialForm);
-    } catch (error) {
-      console.error(error);
-      alert("Error al editar el producto");
+    const success = await putProduct(id, productData);
+    if (success) {
+      setSuccessMessage("Producto editado exitosamente!");
+      setTimeout(() => {
+        navigate("/tienda");
+      }, 1500);
     }
   };
+
+  if (loading) {
+    return <div style={{ padding: '20px', textAlign: 'center' }}>Cargando producto...</div>;
+  }
 
   return (
     <div className={style.crearproducto__container}>
@@ -91,6 +104,7 @@ function EditProductPage() {
           <Input
             label="Nombre"
             LabelId="name"
+            name="name"
             type="text"
             onChange={handleInputChange}
             value={form.name}
@@ -101,6 +115,7 @@ function EditProductPage() {
           <Input
             label="Imagen"
             LabelId="image"
+            name="image"
             type="text"
             onChange={handleInputChange}
             value={form.image}
@@ -124,16 +139,18 @@ function EditProductPage() {
           </div>
 
           <div className={style.input__select}>
-            <label htmlFor="status">Estado</label>
+            <label htmlFor="category">Categoría *</label>
             <select
-              name="status"
-              value={form.status}
-              id="status"
+              name="category"
+              id="category"
+              value={form.category}
               onChange={handleInputChange}
+              required
             >
-              {statusData.map((status) => (
-                <option key={status} value={status}>
-                  {statusTranslations[status] || status}
+              <option value="">Selecciona una categoría</option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
                 </option>
               ))}
             </select>
@@ -142,6 +159,7 @@ function EditProductPage() {
           <Input
             label="Precio"
             LabelId="price"
+            name="price"
             type="number"
             onChange={handleInputChange}
             value={form.price}
@@ -151,6 +169,7 @@ function EditProductPage() {
           <Input
             label="Stock"
             LabelId="stock"
+            name="stock"
             type="number"
             onChange={handleInputChange}
             value={form.stock}
@@ -158,16 +177,27 @@ function EditProductPage() {
           />
         </div>
 
-        {/* error puede ser null (falsy). si hay error lo muestra en el formulario */}
-        {errorProductById && (
-          <p> {errorProductById.message || errorProductById} </p>
+        {successMessage && (
+          <p style={{ color: 'green', fontWeight: 'bold', padding: '10px', backgroundColor: '#d4edda', borderRadius: '5px' }}>
+            {successMessage}
+          </p>
         )}
 
-        {putError && <p> {putError.message || putError} </p>}
+        {errorProductById && (
+          <p style={{ color: 'red' }}>{errorProductById.message || errorProductById}</p>
+        )}
 
-        <Button type="submit" variant="primary" onChange={handleFormSubmit}>
-          Editar producto
-        </Button>
+        {putError && <p style={{ color: 'red' }}>{putError.message || putError}</p>}
+
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button type="submit" variant="primary">
+            Editar producto
+          </Button>
+          
+          <Button as={Link} to="/tienda" variant="secondary">
+            Volver a la tienda
+          </Button>
+        </div>
       </form>
     </div>
   );

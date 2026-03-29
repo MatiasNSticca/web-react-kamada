@@ -8,29 +8,30 @@ function usePostProduct() {
     const postProduct = async (formData) => {
         setError(null)
 
+        const token = localStorage.getItem("auth_token")
+
         try {
-            const response = await fetch(`${API_URL}products`,{
-                // metodo post es para la creacion
+            const response = await fetch(`${API_URL}/products`,{
                 method: "POST",
                 headers: {
-                    "Content-type": "application/json"
+                    "Content-type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
-                // body: es el cuerop del request y es por donde viaja la informacion
                 body: JSON.stringify(formData)
             })
-            // si no salio bien el request
-            // este IF chequea un error de la API/Back
+            
             if(!response.ok) {
-                throw new Error(`HTTP error! status ${response.status}`)
+                const errorData = await response.json()
+                throw new Error(errorData.message || `HTTP error! status ${response.status}`)
             }
-            // si no falla ejecuta esto, pasa la respuesta a objeto de js
-            const res = response.json()
-            console.log(res)
-            return true
-            // el catch atrapa todos los errores y lo muestra en la pantalla
+            
+            const res = await response.json()
+            console.log("Producto creado:", res)
+            return res.data
         } catch (error) {
             console.error("Error al crear un nuevo producto", error)
             setError(error)
+            return null
         }
     }
     return { error, postProduct } 

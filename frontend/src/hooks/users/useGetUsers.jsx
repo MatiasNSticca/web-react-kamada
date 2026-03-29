@@ -10,21 +10,25 @@ function useGetUsers() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(`${API_URL}users`);
+      const token = localStorage.getItem("auth_token");
+      
+      const response = await fetch(`${API_URL}/users`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
 
       if (!response.ok) {
-        throw new Error("Error al obtener usuarios");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al obtener usuarios");
       }
 
       const data = await response.json();
-
-      return data.map(user => {
-        const { password: _, ...userWithoutPassword } = user;
-        return userWithoutPassword;
-      });
+      return data.data || [];
 
     } catch (error) {
-      setError("Error al obtener usuarios", error);
+      console.error("Error al obtener usuarios", error);
+      setError(error.message);
       return [];
     } finally {
       setLoading(false);

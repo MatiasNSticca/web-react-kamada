@@ -7,38 +7,33 @@ function useGetProduct() {
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    const postProducts = async () => {
+    const fetchProducts = async () => {
         setLoading(true)
         setError(null)
 
-        //  intenta ejecutar algo
         try {
-           const response = await fetch(`${API_URL}products`)
+           const response = await fetch(`${API_URL}/products`)
 
-        //  valida que no haya error en la consulta a la api
            if(!response.ok){
-                throw new Error(`HPPT error status: ${response.status}`)
+                throw new Error(`HTTP error status: ${response.status}`)
            }
 
-        //  lo transforma en objeto JS: arrays y objs nativos de JS  
            const data = await response.json()
-        //  guarda en el estado al respuesta de la api en obj JS
-           setProducts(data)
+           setProducts(data.data || [])
         } catch (error) {
             console.error(error)
             setError(error)
             setProducts([])
         } finally {
-            //  cual sea el resultado lo pasamos a false
             setLoading(false)
         }
     }
-    //  al ejecutar el hook, necesitamos hacer el llamado a la api
+
     useEffect(() => {
-        postProducts()
+        fetchProducts()
     }, [])
-    //  cuando clave y valor se llaman igual se escribe una sola
-    return { products, error, loading }   
+    
+    return { products, error, loading, refetch: fetchProducts }   
 }
 
 export default useGetProduct

@@ -8,22 +8,26 @@ function usePutProduct() {
     const putProduct = async (productId, formData) => {
         setError(null)
 
+        const token = localStorage.getItem("auth_token")
+
         try {
-            const response = await fetch(`${API_URL}products/${productId}`, {
+            const response = await fetch(`${API_URL}/products/${productId}`, {
                 method: "PUT",
                 headers: {
-                    "Content-type": "Application/json"
+                    "Content-type": "Application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(formData) 
             })
 
             if(!response.ok) {
-                throw new Error("Error al editar el producto")
+                const errorData = await response.json()
+                throw new Error(errorData.message || "Error al editar el producto")
             }
 
             const data = await response.json()
 
-            return data
+            return data.data
         } catch (error) {
             console.error("Error al editar el producto", error)
             setError(error)

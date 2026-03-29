@@ -8,26 +8,28 @@ function useUpdateUser() {
     try {
       setError(null);
 
-      const response = await fetch(`${API_URL}users/${userId}`, {
+      const token = localStorage.getItem("auth_token");
+
+      const response = await fetch(`${API_URL}/users/${userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        throw new Error("Error al actualizar usuario");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al actualizar usuario");
       }
 
       const data = await response.json();
-
-      const { password: _, ...userWithoutPassword } = data;
-
-      return userWithoutPassword;
+      return data.data;
 
     } catch (error) {
-      setError("Error al actualizar usuario", error);
+      console.error("Error al actualizar usuario", error);
+      setError(error.message);
       return null;
     }
   };

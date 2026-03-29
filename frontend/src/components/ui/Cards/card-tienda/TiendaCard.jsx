@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import style from "./TiendaCard.module.css";
 import Button from "../../Button/Button";
 import useDeleteProduct from "../../../../hooks//products/useDeleteProduct";
+import useGetProduct from "../../../../hooks/products/useGetProduct";
 import { useNavigate } from "react-router-dom";
-import { statusTranslations } from "../../../../utils/statusTranslations";
 import useAuth from "../../../../hooks/users/useAuth"
-import { CartProvider, useCart } from "../../../../contex/CartContext";
+import { useCart } from "../../../../contex/CartContext";
 
 
 function TiendaCard( { products = [] } ) {
@@ -13,21 +13,17 @@ function TiendaCard( { products = [] } ) {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth()
   const { addToCart } = useCart();
-  const {error, deleteProduct} = useDeleteProduct()
+  const { error, deleteProduct } = useDeleteProduct();
+  const { refetch } = useGetProduct();
   const [cartError, setCartError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
 
 
   const handleAddToCart = (e, product) => {
     e.stopPropagation();
     setCartError(null);
 
-    // if (!isAuthenticated) {
-    //   alert("Debes iniciar sesión para agregar productos al carrito");
-    //   navigate("/users/login");
-    //   return;
-    // }
-
-    if (product.status !== "AVAILABLE") {
+    if (!product.available) {
       setCartError("El producto no está disponible");
       return;
     }
@@ -39,7 +35,8 @@ function TiendaCard( { products = [] } ) {
 
     try {
       addToCart(product, 1);
-      alert(`${product.name} agregado al carrito`);
+      setSuccessMessage(`${product.name} agregado al carrito`);
+      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
       setCartError(error.message);
     }
@@ -47,10 +44,11 @@ function TiendaCard( { products = [] } ) {
 
   const handleDeleteProduct = async (e, productId) => {
     e.stopPropagation()
-    if(window.confirm("¿Estas seguro que queres eliminar el producto?")) {
+    if(window.confirm("¿Estás seguro que quieres eliminar el producto?")) {
       const response = await deleteProduct(productId)
       if(response) {
-        window.location.reload()
+        setSuccessMessage("Producto eliminado exitosamente!");
+        refetch();
       }
     }
   }
@@ -70,17 +68,35 @@ function TiendaCard( { products = [] } ) {
 
   return (
     <div className={style.container__cards}>
+      {successMessage && (
+        <div style={{ 
+          position: 'fixed', 
+          top: '20px', 
+          right: '20px', 
+          backgroundColor: '#28a745', 
+          color: 'white', 
+          padding: '15px 20px', 
+          borderRadius: '5px', 
+          zIndex: 1000,
+          boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
+        }}>
+          {successMessage}
+        </div>
+      )}
+      
       {products.map((product) => (
-        <div key={product.id} className={style.card}>
-          <img className={style.card__img} src={product.image} />
+        <div key={product._id} className={style.card}>
+          <img className={style.card__img} src={product.image} alt={product.name} />
 
           <div className={style.card__content}>
             <div className={style.card__text}>
               <h5 className={style.card__title}>{product.name}</h5>
               <p className={style.card__pricing}>${product.price}</p>
               <p className={style.card__descripton}>{product.description}</p>
-              <p className={style.card__descripton_status}>{statusTranslations[product.status] || product.status}</p>
-              <p className={style.card__descripton}>Stock {product.stock}</p>
+              <p className={style.card__descripton_status}>
+                {product.available ? "Disponible" : "No disponible"}
+              </p>
+              <p className={style.card__descripton}>Stock: {product.stock}</p>
             </div>
 
             <div className={style.card__color}>
@@ -101,15 +117,26 @@ function TiendaCard( { products = [] } ) {
               ))}
             </div>
 
-              {/* VALIDACION: si el producto esta discontinuado o sin estado no se muestra comprar */}
-            { !isAuthenticated && <Button onClick={ (e) => handleAddToCart(e, product) } variant="primary">Agregar al carrito</Button>}
-            { isAuthenticated && <Button onClick={ (e) => handleEditProduct(e, product.id) } variant="primary">Editar</Button>}
-            { isAuthenticated && <Button onClick={ (e) => handleDeleteProduct(e, product.id) } variant="secondary">Eliminar</Button>}
+            {!isAuthenticated && (
+              <Button onClick={ (e) => handleAddToCart(e, product) } variant="primary">
+                Agregar al carrito
+              </Button>
+            )}
+            {isAuthenticated && (
+              <Button onClick={ (e) => handleEditProduct(e, product._id) } variant="primary">
+                Editar
+              </Button>
+            )}
+            {isAuthenticated && (
+              <Button onClick={ (e) => handleDeleteProduct(e, product._id) } variant="secondary">
+                Eliminar
+              </Button>
+            )}
           </div>
         </div>
       ))}
-      { error && <p> {error.message || error} </p> }
-      { cartError && <p> {cartError.message || cartError} </p> }
+      { error && <p style={{ color: 'red', marginTop: '10px' }}>{error.message || error}</p> }
+      { cartError && <p style={{ color: 'red', marginTop: '10px' }}>{cartError.message || cartError}</p> }
     </div>
   );
 }
