@@ -65,6 +65,29 @@ function HeaderNav({ isOpen, toggleMenu }) {
             </NavLink>
           </li>
 
+          {/* Links visibles solo para usuarios NO autenticados */}
+          {!isAuthenticated && (
+            <>
+              <li className={style.nav__item}>
+                <NavLink to="/contacto" className={getLinkClass} onClick={toggleMenu}>
+                  Contacto
+                </NavLink>
+              </li>
+
+              <li className={style.nav__item}>
+                <NavLink to="/galeria" className={getLinkClass} onClick={toggleMenu}>
+                  Galería
+                </NavLink>
+              </li>
+
+              <li className={style.nav__item}>
+                <NavLink to="/nosotros" className={getLinkClass} onClick={toggleMenu}>
+                  Nosotros
+                </NavLink>
+              </li>
+            </>
+          )}
+
           {/* Usuario logueado - dropdown con nombre */}
           {isAuthenticated && (
             <li className={style.nav__item_user}>
