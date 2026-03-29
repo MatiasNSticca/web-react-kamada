@@ -1,0 +1,124 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--color-bg-nav);
+    border-bottom: 1px solid var(--color-neutral);
+    box-shadow: 10px 0px 100px 10px rgba(0, 0, 0, 0.637);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.nav__logo img {
+    width: 40px;
+    height: auto;
+    border-radius: 50%;
+}
+
+.active {
+  color: var(--color-primary);
+  font-weight: 500;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+/* Menu mobile */
+.nav__toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 1100;
+}
+
+.nav__toggle span {
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-text-black);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Estado abierto */
+.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* PANEL LATERAL */
+.nav__list {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    height: 100%;
+    background: var(--color-bg-nav);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    border-left: 1px solid var(--color-neutral);
+    box-shadow: 0px 10px 100px 10px rgba(0, 0, 0, 0.637);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+/* Clase que abre el menú */
+.nav__list--open {
+    right: 0;
+}
+
+/* Links */
+.nav__item {
+    list-style: none;
+}
+
+.nav__link {
+    text-decoration: none;
+    color: var(--color-text-black);
+    transition: color 0.3s;
+}
+
+.nav__link:hover {
+    color: var(--color-hover-link);
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+    .nav {
+        position: fixed;
+        width: 100dvw;
+        justify-content: space-around;
+        box-shadow: 0px 10px 100px 10px rgba(255, 255, 255, 0.219);
+    }
+
+    .nav__toggle {
+        display: none;
+    }
+
+    .nav__list {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+        position: static;
+        background: none;
+        width: auto;
+        padding: 0;
+        box-shadow: none;
+    }
+
+    .nav__item--spotify {
+        display: none;
+    }
+}

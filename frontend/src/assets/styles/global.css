@@ -1,0 +1,78 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    background-color: var(--color-fill);
+    font-family: "Lexend Deca", sans-serif;
+}
+
+p {
+    /* font-size: 14px; */
+    font-size: clamp(0.875rem, 0.8rem + 0.4vw, 1rem);
+    color: var(--color-text-white);
+}
+
+h1 {
+    /* font-size: 60px; */
+    font-size: clamp(3rem, 2.5rem + 2vw, 4rem);
+    font-family: "Rubik Maps", system-ui;
+    color: var(--color-text-white);
+}
+
+h2 {
+    /* font-size: 36px; */
+    font-size: clamp(2.25rem, 2rem + 1.5vw, 3rem);
+    font-family: "Rubik Maps", system-ui;
+    text-transform: uppercase;
+    color: var(--color-text-white);
+}
+
+h3 {
+    /* font-size: 28px; */
+    font-size: clamp(1.875rem, 1.6rem + 1.2vw, 2.25rem);
+    color: var(--color-text-white);
+}
+
+h4 {
+    /* font-size: 24px; */
+    font-size: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
+    color: var(--color-text-white);
+
+}
+
+h5 {
+    /* font-size: 20px; */
+    font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.5rem);
+    color: var(--color-text-white);
+}
+
+h6 {
+    /* font-size: 14px; */
+    font-size: clamp(1.125rem, 1rem + 0.7vw, 1.25rem);
+    color: var(--color-text-white);
+}
+
+a {
+    /* font-size: 14px; */
+    font-size: clamp(0.875rem, 0.8rem + 0.4vw, 1rem);
+    text-decoration: none;
+    color: initial;
+}
+
+li {
+    list-style: none;
+}
+
+li:hover,
+li:hover a,
+li:hover svg {
+    color: var(--color-hover-link);
+}

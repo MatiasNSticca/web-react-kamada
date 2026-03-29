@@ -1,0 +1,59 @@
+.registro__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    padding: 20px 16px;
+}
+
+.registro__header {
+    text-align: center;
+}
+
+.registro__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form__content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+}
+
+.registro__container label {
+    color: var(--color-text-white);
+}
+
+@media (min-width: 600px) {
+
+    .registro__form,
+    .registro__container a{
+        width: auto;
+    }
+
+    .registro__form {
+        width: 50%;
+    }
+}
+
+@media (min-width: 960px) {
+
+    .registro__container {
+        width: 100%;
+        gap: 24px;
+        padding: 80px 40px;
+    }
+
+    .registro__form {
+        width: 30%;
+    }
+
+    .registro__container a {
+        width: auto;
+    }
+}

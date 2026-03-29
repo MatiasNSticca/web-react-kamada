@@ -1,0 +1,25 @@
+.error404__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    padding: 20px 16px;
+}
+
+.error404__header {
+    text-align: center;
+}
+
+@media (min-width: 960px) {
+
+    .error404__container {
+        width: 100%;
+        gap: 24px;
+        padding: 80px 40px;
+    }
+
+    .error404__container a {
+        width: auto;
+    }
+}
