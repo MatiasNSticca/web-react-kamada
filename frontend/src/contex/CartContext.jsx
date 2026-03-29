@@ -7,7 +7,6 @@ const CART_STORAGE_KEY = "cart";
 function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
-  // Cargar carrito del localStorage al iniciar
   useEffect(() => {
     const savedCart = localStorage.getItem(CART_STORAGE_KEY);
     if (savedCart) {
@@ -21,40 +20,40 @@ function CartProvider({ children }) {
     }
   }, []);
 
-  // Guardar carrito en localStorage cuando cambie
   useEffect(() => {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
   }, [cartItems]);
 
   const addToCart = (product, quantity = 1) => {
-    // Validar stock
-    if (product.status !== "AVAILABLE" || product.stock < quantity) {
+    const productId = product._id || product.id;
+    const productStock = product.stock;
+    const isAvailable = product.available;
+
+    if (!isAvailable || productStock < quantity) {
       throw new Error("Producto no disponible o sin stock suficiente");
     }
 
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === product.id);
+      const existingItem = prevItems.find((item) => item.id === productId);
 
       if (existingItem) {
-        // Si ya existe, actualizar cantidad
         const newQuantity = existingItem.quantity + quantity;
-        if (newQuantity > product.stock) {
+        if (newQuantity > productStock) {
           throw new Error("No hay suficiente stock");
         }
         return prevItems.map((item) =>
-          item.id === product.id ? { ...item, quantity: newQuantity } : item
+          item.id === productId ? { ...item, quantity: newQuantity } : item
         );
       } else {
-        // Si no existe, agregar nuevo item
         return [
           ...prevItems,
           {
-            id: product.id,
+            id: productId,
             name: product.name,
             price: product.price,
             image: product.image,
             quantity: quantity,
-            stock: product.stock,
+            stock: productStock,
           },
         ];
       }
