@@ -107,6 +107,20 @@ function HeaderNav({ isOpen, toggleMenu }) {
             </NavLink>
           </li>
 
+          {/* Usuario logueado - muestra nombre y opciones */}
+          {isAuthenticated && (
+            <>
+              <li className={style.nav__item}>
+                <NavLink to="/mi-perfil" className={getLinkClass} onClick={toggleMenu}>
+                  👤 Mi Perfil
+                </NavLink>
+              </li>
+              <li className={style.nav__user}>
+                <span>Hola, <strong>{user?.username || user?.datosPersonales?.nombre || 'Usuario'}</strong></span>
+              </li>
+            </>
+          )}
+
           {/* Botones login/registro */}
           {!isAuthenticated && (
             <>

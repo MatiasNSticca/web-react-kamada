@@ -11,7 +11,7 @@ import { useCart } from "../../../../contex/CartContext";
 function TiendaCard( { products = [] } ) {
 
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, isAdmin } = useAuth()
   const { addToCart } = useCart();
   const { error, deleteProduct } = useDeleteProduct();
   const { refetch } = useGetProduct();
@@ -117,20 +117,21 @@ function TiendaCard( { products = [] } ) {
               ))}
             </div>
 
-            {!isAuthenticated && (
-              <Button onClick={ (e) => handleAddToCart(e, product) } variant="primary">
-                Agregar al carrito
-              </Button>
-            )}
-            {isAuthenticated && (
-              <Button onClick={ (e) => handleEditProduct(e, product._id) } variant="primary">
-                Editar
-              </Button>
-            )}
-            {isAuthenticated && (
-              <Button onClick={ (e) => handleDeleteProduct(e, product._id) } variant="secondary">
-                Eliminar
-              </Button>
+            {/* Todos pueden agregar al carrito (registrados o no) */}
+            <Button onClick={ (e) => handleAddToCart(e, product) } variant="primary">
+              Agregar al carrito
+            </Button>
+            
+            {/* Solo admins pueden editar y eliminar */}
+            {isAdmin && (
+              <>
+                <Button onClick={ (e) => handleEditProduct(e, product._id) } variant="primary">
+                  Editar
+                </Button>
+                <Button onClick={ (e) => handleDeleteProduct(e, product._id) } variant="secondary">
+                  Eliminar
+                </Button>
+              </>
             )}
           </div>
         </div>
