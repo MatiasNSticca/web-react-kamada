@@ -58,6 +58,14 @@ export const router = createBrowserRouter([
                 element: <Carrito />,
             },
             {
+                path: "mi-perfil",
+                element: (
+                    <ProtectedRoute requireAdmin={false}>
+                        <Perfil />
+                    </ProtectedRoute>
+                )
+            },
+            {
                 path: "*",
                 element: <Error404 />
             }

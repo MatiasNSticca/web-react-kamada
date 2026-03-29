@@ -1,7 +1,8 @@
 import { 
     faEnvelope,
     faStore,
-    faBagShopping
+    faBagShopping,
+    faChevronDown
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -18,5 +19,6 @@ export const Icons = {
     tienda: faStore,
     facebook: faFacebook,
     instagram: faInstagram,
-    carrito: faBagShopping
+    carrito: faBagShopping,
+    chevronDown: faChevronDown
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom"
 import style from "./HeaderNav.module.css"
 import Button from "../../ui/Button/Button"
@@ -10,9 +10,10 @@ import { Icons } from "../../../assets/icons/icons"
 
 function HeaderNav({ isOpen, toggleMenu }) {
 
-  const { user, isAuthenticated, isAdmin, isMaster, logout } = useAuth()
+  const { user, isAuthenticated, isAdmin, logout } = useAuth()
   const { getCartItemsCount } = useCart()
   const cartCount = getCartItemsCount()
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
 
   const getLinkClass = ({ isActive }) =>
     `${style.nav__link} ${isActive ? style.active : ""}`;
@@ -20,6 +21,7 @@ function HeaderNav({ isOpen, toggleMenu }) {
   const handleLogout = () => {
     logout();
     toggleMenu();
+    setUserMenuOpen(false);
   };
 
   return (
@@ -63,25 +65,58 @@ function HeaderNav({ isOpen, toggleMenu }) {
             </NavLink>
           </li>
 
-          <li className={style.nav__item}>
-            <NavLink to="/galeria" className={getLinkClass} onClick={toggleMenu}>
-              Galería
-            </NavLink>
-          </li>
+          {/* Usuario logueado - dropdown con nombre */}
+          {isAuthenticated && (
+            <li className={style.nav__item_user}>
+              <div 
+                className={style.user_dropdown}
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+              >
+                <span className={style.user_name}>
+                  {user?.username || user?.datosPersonales?.nombre || 'Usuario'}
+                </span>
+                <FontAwesomeIcon icon={Icons.chevronDown} className={style.user_arrow} />
+              </div>
+              
+              {userMenuOpen && (
+                <div className={style.dropdown_menu}>
+                  <NavLink 
+                    to="/mi-perfil" 
+                    className={style.dropdown_item}
+                    onClick={() => { toggleMenu(); setUserMenuOpen(false); }}
+                  >
+                    👤 Mi Perfil
+                  </NavLink>
+                  <button 
+                    className={style.dropdown_item}
+                    onClick={handleLogout}
+                  >
+                    🚪 Cerrar Sesión
+                  </button>
+                </div>
+              )}
+            </li>
+          )}
 
-          <li className={style.nav__item}>
-            <NavLink to="/nosotros" className={getLinkClass} onClick={toggleMenu}>
-              Nosotros
-            </NavLink>
-          </li>
+          {/* Botones login/registro */}
+          {!isAuthenticated && (
+            <>
+              <li>
+                <Button as={Link} to="/registro" variant="primary" onClick={toggleMenu}>
+                  Registrarme
+                </Button>
+              </li>
 
-          <li className={style.nav__item}>
-            <NavLink to="/contacto" className={getLinkClass} onClick={toggleMenu}>
-              Contacto
-            </NavLink>
-          </li>
+              <li>
+                <Button as={Link} to="/login" variant="secondary" onClick={toggleMenu}>
+                  Iniciar sesión
+                </Button>
+              </li>
+            </>
+          )}
 
-          <li> 
+          {/* Carrito siempre a la derecha */}
+          <li className={style.nav__cart}> 
             <NavLink to="/carrito" style={{ position: "relative" }}>
               <FontAwesomeIcon icon={Icons.carrito}/>
               {cartCount > 0 && 
@@ -106,46 +141,6 @@ function HeaderNav({ isOpen, toggleMenu }) {
                 }
             </NavLink>
           </li>
-
-          {/* Usuario logueado - muestra nombre y opciones */}
-          {isAuthenticated && (
-            <>
-              <li className={style.nav__item}>
-                <NavLink to="/mi-perfil" className={getLinkClass} onClick={toggleMenu}>
-                  👤 Mi Perfil
-                </NavLink>
-              </li>
-              <li className={style.nav__user}>
-                <span>Hola, <strong>{user?.username || user?.datosPersonales?.nombre || 'Usuario'}</strong></span>
-              </li>
-            </>
-          )}
-
-          {/* Botones login/registro */}
-          {!isAuthenticated && (
-            <>
-              <li>
-                <Button as={Link} to="/registro" variant="primary" onClick={toggleMenu}>
-                  Registrarme
-                </Button>
-              </li>
-
-              <li>
-                <Button as={Link} to="/login" variant="secondary" onClick={toggleMenu}>
-                  Iniciar sesión
-                </Button>
-              </li>
-            </>
-          )}
-
-          {/* Botón logout */}
-          {isAuthenticated && (
-            <li>
-              <Button onClick={handleLogout} variant="primary">
-                Cerrar sesión
-              </Button>
-            </li>
-          )}
         </ul>
       )}
     </nav>

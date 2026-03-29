@@ -28,6 +28,23 @@ function Footer() {
             <p className={style.footer__subtitle}>¡Un Kamada nunca amaga!</p>
           </div>
 
+          <div className={style.footer__links}>
+            <div className={style.footer__header}>
+              <h6 className={style.footer__title}>Navegación</h6>
+            </div>
+            <ul className={style.redes__lista}>
+              <li className={style.redes__items}> 
+                <Link to="/galeria">Galería</Link>
+              </li>
+              <li className={style.redes__items}> 
+                <Link to="/nosotros">Nosotros</Link>
+              </li>
+              <li className={style.redes__items}> 
+                <Link to="/contacto">Contacto</Link>
+              </li>
+            </ul>
+          </div>
+
           <div className={style.footer__redes}>
             <div className={style.footer__header}>
               <h6 className={style.footer__title}>Redes sociales</h6>

@@ -5,6 +5,7 @@ import usePostProduct from "../../hooks/products/usePostProduct";
 import usePutProduct from "../../hooks/products/usePutProduct";
 import useGetCategories from "../../hooks/products/useGetCategories";
 import useGetProductById from "../../hooks/products/useGetProductById";
+import Toast from "../../components/ui/Toast/Toast";
 import "./ProductModal.css";
 
 function ProductModal({ isOpen, onClose, product, onSuccess }) {
@@ -198,13 +199,15 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
             </div>
 
             {successMessage && (
-              <div className="success-message">{successMessage}</div>
+              <Toast message={successMessage} type="success" onClose={() => setSuccessMessage("")} />
             )}
 
             {(postError || putError) && (
-              <div className="error-message">
-                {postError?.message || putError?.message}
-              </div>
+              <Toast 
+                message={postError?.message || putError?.message} 
+                type="error" 
+                onClose={() => {}} 
+              />
             )}
           </div>
 

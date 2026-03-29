@@ -6,6 +6,7 @@ import useGetProduct from "../../../../hooks/products/useGetProduct";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../../hooks/users/useAuth"
 import { useCart } from "../../../../contex/CartContext";
+import Toast from "../../../ui/Toast/Toast";
 
 
 function TiendaCard( { products = [] } ) {
@@ -69,19 +70,19 @@ function TiendaCard( { products = [] } ) {
   return (
     <div className={style.container__cards}>
       {successMessage && (
-        <div style={{ 
-          position: 'fixed', 
-          top: '20px', 
-          right: '20px', 
-          backgroundColor: '#28a745', 
-          color: 'white', 
-          padding: '15px 20px', 
-          borderRadius: '5px', 
-          zIndex: 1000,
-          boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
-        }}>
-          {successMessage}
-        </div>
+        <Toast 
+          message={successMessage} 
+          type="success" 
+          onClose={() => setSuccessMessage("")} 
+        />
+      )}
+      
+      {cartError && (
+        <Toast 
+          message={cartError} 
+          type="error" 
+          onClose={() => setCartError(null)} 
+        />
       )}
       
       {products.map((product) => (

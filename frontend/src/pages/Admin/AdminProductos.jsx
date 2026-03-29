@@ -3,6 +3,7 @@ import Button from "../../components/ui/Button/Button";
 import useGetProduct from "../../hooks/products/useGetProduct";
 import useDeleteProduct from "../../hooks/products/useDeleteProduct";
 import ProductModal from "../Producto/ProductModal";
+import Toast from "../../components/ui/Toast/Toast";
 import "./AdminProductos.css";
 
 function AdminProductos() {
@@ -67,11 +68,11 @@ function AdminProductos() {
       </div>
 
       {successMessage && (
-        <div className="success-message">{successMessage}</div>
+        <Toast message={successMessage} type="success" onClose={() => setSuccessMessage("")} />
       )}
 
       {deleteError && (
-        <div className="error-message">{deleteError.message}</div>
+        <Toast message={deleteError.message} type="error" onClose={() => {}} />
       )}
 
       <div className="table-container">

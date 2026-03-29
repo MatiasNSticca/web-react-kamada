@@ -94,6 +94,73 @@
     color: var(--color-hover-link);
 }
 
+/* Usuario dropdown */
+.nav__item_user {
+    list-style: none;
+    position: relative;
+}
+
+.user_dropdown {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.user_dropdown:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.user_name {
+    font-weight: bold;
+    color: var(--color-text-black);
+}
+
+.user_arrow {
+    font-size: 0.8rem;
+    color: var(--color-text-black);
+}
+
+.dropdown_menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    min-width: 150px;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.dropdown_item {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: var(--color-text-black);
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+
+.dropdown_item:hover {
+    background: #f5f5f5;
+}
+
+/* Carrito a la derecha */
+.nav__cart {
+    list-style: none;
+    margin-left: auto;
+    padding-left: 1rem;
+}
+
 /* Desktop */
 @media (min-width: 768px) {
     .nav {
@@ -110,12 +177,13 @@
     .nav__list {
         display: flex;
         flex-direction: row;
-        gap: 2rem;
+        gap: 1.5rem;
         position: static;
         background: none;
         width: auto;
         padding: 0;
         box-shadow: none;
+        align-items: center;
     }
 
     .nav__item--spotify {
