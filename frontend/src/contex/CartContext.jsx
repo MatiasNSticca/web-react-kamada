@@ -26,8 +26,10 @@ function CartProvider({ children }) {
 
   const addToCart = (product, quantity = 1) => {
     const productId = product._id || product.id;
-    const productStock = product.stock;
-    const isAvailable = product.available;
+    
+    // Manejar tanto productos como eventos
+    const productStock = product.stock || product.ticketsAvailable || 0;
+    const isAvailable = product.available !== undefined ? product.available : (product.active !== false);
 
     if (!isAvailable || productStock < quantity) {
       throw new Error("Producto no disponible o sin stock suficiente");
@@ -54,6 +56,8 @@ function CartProvider({ children }) {
             image: product.image,
             quantity: quantity,
             stock: productStock,
+            type: product.type || 'producto',
+            description: product.description,
           },
         ];
       }
