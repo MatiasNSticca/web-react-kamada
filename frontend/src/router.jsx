@@ -21,6 +21,7 @@ import LoginUserPage from "./pages/Login/LoginUserPage"
 import User from "./pages/Users/User"
 import AdminUsers from "./pages/AdminUsers/AdminUsers"
 import AdminProductos from "./pages/Admin/AdminProductos"
+import AdminEventos from "./pages/Admin/AdminEventos"
 import Perfil from "./pages/Perfil/Perfil"
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute"
 
@@ -97,6 +98,10 @@ export const router = createBrowserRouter([
             {
                 path: "admin/productos",
                 element: <AdminProductos />
+            },
+            {
+                path: "admin/eventos",
+                element: <AdminEventos />
             },
             {
                 path: "admin/usuarios",

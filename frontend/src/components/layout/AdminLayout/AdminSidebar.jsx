@@ -15,6 +15,7 @@ function AdminSidebar({ isOpen, toggleMenu }) {
 
   const navItems = [
     { path: "/admin/productos", label: "Productos", icon: "📦" },
+    { path: "/admin/eventos", label: "Eventos", icon: "🎤" },
     ...(isMaster ? [{ path: "/admin/usuarios", label: "Usuarios", icon: "👥" }] : []),
     { path: "/admin/perfil", label: "Mi Perfil", icon: "👤" },
   ];
