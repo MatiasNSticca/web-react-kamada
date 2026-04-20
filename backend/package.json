@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node index.js",
+    "build": "node -e \"console.log('No build step required for Node.js backend')\"",
+    "lint": "node --check index.js",
     "create-master": "node scripts/createMaster.js",
     "seed-categories": "node scripts/seedCategories.js"
   },
