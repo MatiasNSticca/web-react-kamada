@@ -54,6 +54,142 @@ kamada-react/
     └── vite.config.js     # Configuración Vite
 ```
 
+## 📊 Esquema de la Base de Datos
+
+### Productos (Products)
+| Campo | Tipo | Requerido | Descripción |
+|-------|------|-----------|-------------|
+| `_id` | ObjectId | Sí | ID único del documento |
+| `name` | String | Sí | Nombre del producto (máx 100 caracteres) |
+| `description` | String | Sí | Descripción del producto (máx 500 caracteres) |
+| `price` | Number | Sí | Precio del producto (min 0) |
+| `image` | String | Sí | URL de la imagen del producto |
+| `category` | ObjectId | Sí | Referencia a Category |
+| `stock` | Number | Sí | Cantidad en stock (default 0) |
+| `available` | Boolean | No | Si el producto está disponible (default true) |
+| `sku` | String | No | Código SKU único |
+| `createdAt` | Date | Sí | Fecha de creación |
+| `updatedAt` | Date | Sí | Fecha de última modificación |
+
+### Categorías (Categories)
+| Campo | Tipo | Requerido | Descripción |
+|-------|------|-----------|-------------|
+| `_id` | ObjectId | Sí | ID único del documento |
+| `name` | String | Sí | Nombre de la categoría (máx 50 caracteres, único) |
+| `description` | String | No | Descripción de la categoría (máx 200 caracteres) |
+| `image` | String | No | URL de imagen de la categoría |
+| `active` | Boolean | No | Si la categoría está activa (default true) |
+| `createdAt` | Date | Sí | Fecha de creación |
+| `updatedAt` | Date | Sí | Fecha de última modificación |
+
+### Usuarios (Users)
+| Campo | Tipo | Requerido | Descripción |
+|-------|------|-----------|-------------|
+| `_id` | ObjectId | Sí | ID único del documento |
+| `username` | String | Sí | Nombre de usuario único (máx 50 caracteres) |
+| `email` | String | Sí | Email único (se guarda en minúsculas) |
+| `password` | String | Sí | Contraseña hasheada con bcrypt (mín 6 caracteres) |
+| `role` | String | No | Rol del usuario: `master_admin`, `admin_medio`, `comprador` (default: comprador) |
+| `permisos` | Array | No | Array de strings con permisos granulares |
+| `datosPersonales` | Object | No | Objeto con: nombre, apellido, telefono, direccion |
+| `activo` | Boolean | No | Si el usuario está activo (default true) |
+| `createdAt` | Date | Sí | Fecha de creación |
+| `updatedAt` | Date | Sí | Fecha de última modificación |
+
+### Eventos (Events)
+| Campo | Tipo | Requerido | Descripción |
+|-------|------|-----------|-------------|
+| `_id` | ObjectId | Sí | ID único del documento |
+| `title` | String | Sí | Título del evento (máx 100 caracteres) |
+| `description` | String | Sí | Descripción del evento (máx 500 caracteres) |
+| `date` | Date | Sí | Fecha del evento |
+| `location` | String | Sí | Ubicación del evento |
+| `venue` | String | No | Lugar específico |
+| `image` | String | No | URL de imagen del evento |
+| `price` | Number | No | Precio de la entrada (min 0) |
+| `ticketsAvailable` | Number | No | Cantidad de entradas disponibles |
+| `category` | String | No | Categoría: recital, festival, meetup, otro |
+| `active` | Boolean | No | Si el evento está activo (default true) |
+| `createdAt` | Date | Sí | Fecha de creación |
+| `updatedAt` | Date | Sí | Fecha de última modificación |
+
+## 📝 Ejemplos de Solicitudes POST
+
+### Crear Producto
+```bash
+POST /api/products
+Content-Type: application/json
+Authorization: Bearer <token_jwt>
+
+{
+  "name": "Remera Oficial Kamada",
+  "description": "Remera negra con logo bordado de la banda",
+  "price": 15000,
+  "image": "https://ejemplo.com/images/remera.jpg",
+  "category": "64f1a2b3c9e8a10000000001",
+  "stock": 50
+}
+```
+
+### Crear Categoría
+```bash
+POST /api/categories
+Content-Type: application/json
+Authorization: Bearer <token_jwt>
+
+{
+  "name": "Merchandising",
+  "description": "Productos de la banda",
+  "image": "https://ejemplo.com/images/cat-merch.jpg"
+}
+```
+
+### Registrar Usuario
+```bash
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "username": "nuevo_usuario",
+  "email": "usuario@ejemplo.com",
+  "password": "password123",
+  "datosPersonales": {
+    "nombre": "Juan",
+    "apellido": "Pérez",
+    "telefono": "+5491112345678"
+  }
+}
+```
+
+### Iniciar Sesión (Login)
+```bash
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@kamada.com",
+  "password": "admin123"
+}
+```
+
+### Crear Evento
+```bash
+POST /api/events
+Content-Type: application/json
+Authorization: Bearer <token_jwt>
+
+{
+  "title": "Recital en Buenos Aires",
+  "description": "Show presentación nuevo disco",
+  "date": "2025-06-15T21:00:00.000Z",
+  "location": "Buenos Aires, Argentina",
+  "venue": "Estadio José Amalfitani",
+  "price": 25000,
+  "ticketsAvailable": 5000,
+  "category": "recital"
+}
+```
+
 ## ⚡ Instalación y Ejecución
 
 ### Requisitos
