@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import style from "./Home.module.css";
 import Eventos from "../Eventos/Eventos";
-import Tienda from "../Tienda/Tienda";
+import Tienda from "../Tienda/tienda";
 import Galeria from "../Galeria/Galeria";
 import Contacto from "../Contacto/Contacto";
 import Hero from "../../components/layout/Header/Hero";

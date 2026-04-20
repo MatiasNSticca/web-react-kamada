@@ -4,7 +4,7 @@ import EmptyLayout from "./components/layout/EmptyLayout"
 
 import Home from "./pages/Home/Home"
 import Eventos from "./pages/Eventos/Eventos"
-import Tienda from "./pages/Tienda/Tienda"
+import Tienda from "./pages/Tienda/tienda"
 import Galeria from "./pages/Galeria/Galeria"
 import Nosotros from "./pages/Nosotros/Nosotros"
 import Contacto from "./pages/Contacto/Contacto"
