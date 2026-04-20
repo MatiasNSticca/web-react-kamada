@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./Tienda.module.css";
+import style from "./tienda.module.css";
 import TiendaCard from "../../components/ui/Cards/card-tienda/TiendaCard";
 import useGetProduct from "../../hooks/products/useGetProduct";
 
