@@ -5,11 +5,11 @@ import AdminLayout from "./components/layout/AdminLayout/AdminLayout"
 
 import Home from "./pages/Home/Home"
 import Eventos from "./pages/Eventos/Eventos"
-import Tienda from "./pages/Tienda/Tienda"
+import Tienda from "./pages/Tienda/tienda"
 import Galeria from "./pages/Galeria/Galeria"
 import Nosotros from "./pages/Nosotros/Nosotros"
 import Contacto from "./pages/Contacto/Contacto"
-import Carrito from "./pages/Carrito/Carrito"
+import Carrito from "./pages/Carrito/carrito"
 
 
 import Error404 from "./pages/Error404/Error404";
