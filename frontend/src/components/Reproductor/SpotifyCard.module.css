@@ -1,0 +1,10 @@
+.footer__music {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+}
+
+.spotify__iframe {
+    border-radius: 12px;
+}
