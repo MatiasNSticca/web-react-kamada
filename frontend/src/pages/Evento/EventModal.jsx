@@ -10,7 +10,7 @@ import "./EventModal.css";
 function EventModal({ isOpen, onClose, event, onSuccess }) {
   const { error: postError, postEvent } = usePostEvent();
   const { error: putError, putEvent } = usePutEvent();
-  const { getEventById, loading: loadingEvent } = useGetEventById();
+  const { getEventById } = useGetEventById();
 
   const isEditing = !!event;
 
@@ -30,17 +30,6 @@ function EventModal({ isOpen, onClose, event, onSuccess }) {
   const [form, setForm] = useState(initialForm);
   const [successMessage, setSuccessMessage] = useState("");
 
-  useEffect(() => {
-    if (isOpen) {
-      if (event) {
-        loadEventData(event._id);
-      } else {
-        setForm(initialForm);
-      }
-      setSuccessMessage("");
-    }
-  }, [isOpen, event]);
-
   const loadEventData = async (eventId) => {
     const data = await getEventById(eventId);
     if (data) {
@@ -58,6 +47,17 @@ function EventModal({ isOpen, onClose, event, onSuccess }) {
       });
     }
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      if (event) {
+        loadEventData(event._id);
+      } else {
+        setForm(initialForm);
+      }
+      setSuccessMessage("");
+    }
+  }, [isOpen, event, loadEventData, initialForm]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;

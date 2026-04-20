@@ -12,7 +12,7 @@ import Toast from "../../../ui/Toast/Toast";
 function TiendaCard( { products = [] } ) {
 
   const navigate = useNavigate();
-  const { isAuthenticated, isAdmin } = useAuth()
+  const { isAdmin } = useAuth()
   const { addToCart } = useCart();
   const { error, deleteProduct } = useDeleteProduct();
   const { refetch } = useGetProduct();

@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./AdminUsers.module.css";
 import Button from "../../components/ui/Button/Button";
 import useAuth from "../../hooks/users/useAuth";
 import useGetUsers from "../../hooks/users/useGetUsers";
 import useDeleteUser from "../../hooks/users/useDeleteUser";
-import useUpdateUser from "../../hooks/users/useUpdateUser";
 import Input from "../../components/ui/Inputs/Input";
 
 function AdminUsers() {
   const { user: currentUser, isAuthenticated, isMaster } = useAuth();
   const { getUsers, loading: loadingUsers } = useGetUsers();
   const { deleteUser } = useDeleteUser();
-  const { updateUser } = useUpdateUser();
-  
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [isCreating, setIsCreating] = useState(false);
@@ -24,10 +21,6 @@ function AdminUsers() {
     password: "",
     role: "comprador",
   });
-
-  useEffect(() => {
-    loadUsers();
-  }, []);
 
   const loadUsers = async () => {
     const usersData = await getUsers();

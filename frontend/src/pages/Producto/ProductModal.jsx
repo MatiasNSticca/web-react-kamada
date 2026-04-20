@@ -12,7 +12,7 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
   const { categories } = useGetCategories();
   const { error: postError, postProduct } = usePostProduct();
   const { error: putError, putProduct } = usePutProduct();
-  const { getProductById, loading: loadingProduct } = useGetProductById();
+  const { getProductById } = useGetProductById();
 
   const isEditing = !!product;
 
@@ -29,17 +29,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
   const [form, setForm] = useState(initialForm);
   const [successMessage, setSuccessMessage] = useState("");
 
-  useEffect(() => {
-    if (isOpen) {
-      if (product) {
-        loadProductData(product._id);
-      } else {
-        setForm(initialForm);
-      }
-      setSuccessMessage("");
-    }
-  }, [isOpen, product]);
-
   const loadProductData = async (productId) => {
     const data = await getProductById(productId);
     if (data) {
@@ -54,6 +43,17 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
       });
     }
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      if (product) {
+        loadProductData(product._id);
+      } else {
+        setForm(initialForm);
+      }
+      setSuccessMessage("");
+    }
+  }, [isOpen, product, loadProductData, initialForm]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
