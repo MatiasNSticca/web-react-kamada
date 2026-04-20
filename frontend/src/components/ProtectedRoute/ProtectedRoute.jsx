@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/users/useAuth";
+import style from "./ProtectedRoute.module.css";
 
 function ProtectedRoute({ children, requireAdmin = false, requireMaster = false }) {
   const { isAuthenticated, isAdmin, isMaster, loading } = useAuth();
@@ -7,13 +8,8 @@ function ProtectedRoute({ children, requireAdmin = false, requireMaster = false 
 
   if (loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh' 
-      }}>
-        <p>Cargando...</p>
+      <div className={style.protectedRoute}>
+        <p className={style.protectedRoute__loading}>Cargando...</p>
       </div>
     );
   }

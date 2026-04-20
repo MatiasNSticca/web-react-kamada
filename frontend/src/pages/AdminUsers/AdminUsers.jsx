@@ -146,24 +146,18 @@ function AdminUsers() {
   };
 
   if (!isAuthenticated) {
-    return <h1 className={style.header}>No hay usuario registrado</h1>;
+    return <h1 className={style.adminUsers__header}>No hay usuario registrado</h1>;
   }
 
   if (!isMaster) {
-    return <h1 className={style.header}>Acceso denegado</h1>;
+    return <h1 className={style.adminUsers__header}>Acceso denegado</h1>;
   }
 
   return (
-    <div className={style.admin}>
-      <div className={style.admin__container}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-          <Link to="/tienda" style={{ textDecoration: 'none' }}>
-            <Button variant="secondary">Volver a la tienda</Button>
-          </Link>
-        </div>
-
-        <div className={style.admin__header}>
-          <h2 className={style.admin__title}>Gestión de Usuarios</h2>
+    <section className={style.adminUsers}>
+      <div className={style.adminUsers__container}>
+        <div className={style.adminUsers__headerTitle}>
+          <h2 className={style.adminUsers__title}>Gestión de Usuarios</h2>
           <Button 
             variant="primary" 
             onClick={() => {
@@ -177,22 +171,16 @@ function AdminUsers() {
         </div>
 
         {successMessage && (
-          <div style={{ 
-            backgroundColor: '#28a745', 
-            color: 'white', 
-            padding: '15px', 
-            borderRadius: '5px', 
-            marginBottom: '20px' 
-          }}>
+          <div className={style.adminUsers__success}>
             {successMessage}
           </div>
         )}
 
         {(isCreating || editingUser) && (
-          <div className={style.form__container}>
+          <div className={style.adminUsers__formContainer}>
             <h3>{isCreating ? "Crear nuevo usuario" : "Editar usuario"}</h3>
             <form 
-              className={style.admin__form} 
+              className={style.adminUsers__form} 
               onSubmit={isCreating ? handleCreateUser : handleEditUser}
             >
               <Input
@@ -225,7 +213,7 @@ function AdminUsers() {
                 isRequired={isCreating}
                 placeholder={isCreating ? "Contraseña" : "Nueva contraseña"}
               />
-              <div className={style.input__select}>
+              <div className={style.adminUsers__select}>
                 <label htmlFor="role">Rol</label>
                 <select
                   name="role"
@@ -237,7 +225,7 @@ function AdminUsers() {
                   <option value="admin_medio">Administrador</option>
                 </select>
               </div>
-              <div className={style.form__buttons}>
+              <div className={style.adminUsers__buttons}>
                 <Button type="submit" variant="primary">
                   {isCreating ? "Crear" : "Guardar cambios"}
                 </Button>
@@ -249,14 +237,14 @@ function AdminUsers() {
                     setEditingUser(null);
                   }}
                 >
-                  Cancelar
+                Cancelar
                 </Button>
               </div>
             </form>
           </div>
         )}
 
-        <div className={style.users__table}>
+        <div className={style.adminUsers__table}>
           {loadingUsers ? (
             <p>Cargando...</p>
           ) : (
@@ -275,25 +263,25 @@ function AdminUsers() {
                     <td>{u.username}</td>
                     <td>{u.email}</td>
                     <td>
-                      <span className={`${style.role__badge} ${u.role === 'master_admin' || u.role === 'admin_medio' ? style.role__admin : style.role__user}`}>
+                      <span className={`${style.adminUsers__roleBadge} ${u.role === 'master_admin' || u.role === 'admin_medio' ? style.adminUsers__roleAdmin : style.adminUsers__roleUser}`}>
                         {getRoleLabel(u.role)}
                       </span>
                     </td>
                     <td>
-                      <div className={style.action__buttons}>
+                      <div className={style.adminUsers__actions}>
                         <Button 
                           variant="secondary" 
                           onClick={() => startEdit(u)}
                           disabled={u._id === currentUser._id || u.role === 'master_admin'}
                         >
-                          Editar
+                        Editar
                         </Button>
                         <Button 
                           variant="primary" 
                           onClick={() => handleDeleteUser(u._id)}
                           disabled={u._id === currentUser._id || u.role === 'master_admin'}
                         >
-                          Eliminar
+                        Eliminar
                         </Button>
                       </div>
                     </td>
@@ -304,7 +292,7 @@ function AdminUsers() {
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

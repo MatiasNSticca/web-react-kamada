@@ -1,19 +1,17 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom"
-import style from "./HeaderNav.module.css"
-import Button from "../../ui/Button/Button"
-import useAuth from "../../../hooks/users/useAuth"
-import { useCart } from "../../../contex/CartContext"
+import { Link, NavLink } from "react-router-dom";
+import style from "./HeaderNav.module.css";
+import Button from "../../ui/Button/Button";
+import useAuth from "../../../hooks/users/useAuth";
+import { useCart } from "../../../contex/CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Icons } from "../../../assets/icons/icons"
-
+import { Icons } from "../../../assets/icons/icons";
 
 function HeaderNav({ isOpen, toggleMenu }) {
-
-  const { user, isAuthenticated, isAdmin, logout } = useAuth()
-  const { getCartItemsCount } = useCart()
-  const cartCount = getCartItemsCount()
-  const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const { user, isAuthenticated, isAdmin, logout } = useAuth();
+  const { getCartItemsCount } = useCart();
+  const cartCount = getCartItemsCount();
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const getLinkClass = ({ isActive }) =>
     `${style.nav__link} ${isActive ? style.active : ""}`;
@@ -45,8 +43,9 @@ function HeaderNav({ isOpen, toggleMenu }) {
 
       {/* Menú - Visible para usuarios NO admin */}
       {!isAdmin && (
-        <ul className={`${style.nav__list} ${isOpen ? style["nav__list--open"] : ""}`}>
-
+        <ul
+          className={`${style.nav__list} ${isOpen ? style["nav__list--open"] : ""}`}
+        >
           <li className={style.nav__item}>
             <NavLink to="/" className={getLinkClass} end onClick={toggleMenu}>
               Inicio
@@ -54,7 +53,11 @@ function HeaderNav({ isOpen, toggleMenu }) {
           </li>
 
           <li className={style.nav__item}>
-            <NavLink to="/eventos" className={getLinkClass} onClick={toggleMenu}>
+            <NavLink
+              to="/eventos"
+              className={getLinkClass}
+              onClick={toggleMenu}
+            >
               Eventos
             </NavLink>
           </li>
@@ -69,19 +72,31 @@ function HeaderNav({ isOpen, toggleMenu }) {
           {!isAuthenticated && (
             <>
               <li className={style.nav__item}>
-                <NavLink to="/contacto" className={getLinkClass} onClick={toggleMenu}>
+                <NavLink
+                  to="/contacto"
+                  className={getLinkClass}
+                  onClick={toggleMenu}
+                >
                   Contacto
                 </NavLink>
               </li>
 
               <li className={style.nav__item}>
-                <NavLink to="/galeria" className={getLinkClass} onClick={toggleMenu}>
+                <NavLink
+                  to="/galeria"
+                  className={getLinkClass}
+                  onClick={toggleMenu}
+                >
                   Galería
                 </NavLink>
               </li>
 
               <li className={style.nav__item}>
-                <NavLink to="/nosotros" className={getLinkClass} onClick={toggleMenu}>
+                <NavLink
+                  to="/nosotros"
+                  className={getLinkClass}
+                  onClick={toggleMenu}
+                >
                   Nosotros
                 </NavLink>
               </li>
@@ -91,30 +106,36 @@ function HeaderNav({ isOpen, toggleMenu }) {
           {/* Usuario logueado - dropdown con nombre */}
           {isAuthenticated && (
             <li className={style.nav__item_user}>
-              <div 
+              <div
                 className={style.user_dropdown}
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
               >
                 <span className={style.user_name}>
-                  {user?.username || user?.datosPersonales?.nombre || 'Usuario'}
+                  {user?.username || user?.datosPersonales?.nombre || "Usuario"}
                 </span>
-                <FontAwesomeIcon icon={Icons.chevronDown} className={style.user_arrow} />
+                <FontAwesomeIcon
+                  icon={Icons.chevronDown}
+                  className={style.user_arrow}
+                />
               </div>
-              
+
               {userMenuOpen && (
                 <div className={style.dropdown_menu}>
-                  <NavLink 
-                    to="/mi-perfil" 
+                  <NavLink
+                    to="/mi-perfil"
                     className={style.dropdown_item}
-                    onClick={() => { toggleMenu(); setUserMenuOpen(false); }}
+                    onClick={() => {
+                      toggleMenu();
+                      setUserMenuOpen(false);
+                    }}
                   >
-                    👤 Mi Perfil
+                    Mi Perfil
                   </NavLink>
-                  <button 
+                  <button
                     className={style.dropdown_item}
                     onClick={handleLogout}
                   >
-                    🚪 Cerrar Sesión
+                    Cerrar sesión
                   </button>
                 </div>
               )}
@@ -125,21 +146,30 @@ function HeaderNav({ isOpen, toggleMenu }) {
           {!isAuthenticated && (
             <>
               <li>
-                <Button as={Link} to="/registro" variant="primary" onClick={toggleMenu}>
+                <Button
+                  as={Link}
+                  to="/registro"
+                  variant="primary"
+                  onClick={toggleMenu}
+                >
                   Registrarme
                 </Button>
               </li>
 
               <li>
-                <Button as={Link} to="/login" variant="secondary" onClick={toggleMenu}>
+                <Button
+                  as={Link}
+                  to="/login"
+                  variant="secondary"
+                  onClick={toggleMenu}
+                >
                   Iniciar sesión
                 </Button>
               </li>
             </>
           )}
 
-          {/* Carrito siempre a la derecha */}
-          <li className={style.nav__cart}> 
+          {/* <li className={style.nav__cart}> 
             <NavLink to="/carrito" style={{ position: "relative" }}>
               <FontAwesomeIcon icon={Icons.carrito}/>
               {cartCount > 0 && 
@@ -163,9 +193,34 @@ function HeaderNav({ isOpen, toggleMenu }) {
                   </span>
                 }
             </NavLink>
-          </li>
+          </li> */}
         </ul>
       )}
+      <li className={style.nav__cart}>
+        <NavLink to="/carrito" style={{ position: "relative" }}>
+          <FontAwesomeIcon icon={Icons.carrito} />
+          {cartCount > 0 && (
+            <span
+              style={{
+                position: "absolute",
+                top: "-8px",
+                right: "-8px",
+                backgroundColor: "#ff4444",
+                color: "white",
+                borderRadius: "50%",
+                width: "20px",
+                height: "20px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "12px",
+              }}
+            >
+              {cartCount}
+            </span>
+          )}
+        </NavLink>
+      </li>
     </nav>
   );
 }

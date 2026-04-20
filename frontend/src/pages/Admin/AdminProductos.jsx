@@ -63,7 +63,7 @@ function AdminProductos() {
       <div className="admin-productos__header">
         <h1>Gestión de Productos</h1>
         <Button variant="primary" onClick={handleCreate}>
-          + Crear Producto
+        Crear producto
         </Button>
       </div>
 
@@ -114,14 +114,14 @@ function AdminProductos() {
                       onClick={() => handleEdit(product)}
                       className="btn-edit"
                     >
-                      ✏️ Editar
+                    ✏️
                     </Button>
                     <Button 
                       variant="primary" 
                       onClick={() => handleDelete(product._id)}
                       className="btn-delete"
                     >
-                      🗑️ Eliminar
+                    🗑️
                     </Button>
                   </td>
                 </tr>

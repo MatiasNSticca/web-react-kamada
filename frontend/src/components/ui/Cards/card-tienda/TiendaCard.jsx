@@ -137,8 +137,8 @@ function TiendaCard( { products = [] } ) {
           </div>
         </div>
       ))}
-      { error && <p style={{ color: 'red', marginTop: '10px' }}>{error.message || error}</p> }
-      { cartError && <p style={{ color: 'red', marginTop: '10px' }}>{cartError.message || cartError}</p> }
+      { error && <p className={style.card__error}>{error.message || error}</p> }
+      { cartError && <p className={style.card__error}>{cartError.message || cartError}</p> }
     </div>
   );
 }

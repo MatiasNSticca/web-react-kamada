@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import style from "./Toast.module.css";
 
 function Toast({ message, type = "success", onClose, duration = 3000 }) {
   useEffect(() => {
@@ -10,41 +11,14 @@ function Toast({ message, type = "success", onClose, duration = 3000 }) {
   }, [onClose, duration]);
 
   return (
-    <div 
-      className={`toast toast-${type}`}
-      style={{
-        position: 'fixed',
-        bottom: '20px',
-        right: '20px',
-        padding: '15px 20px',
-        borderRadius: '5px',
-        zIndex: 9999,
-        boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-        animation: 'slideIn 0.3s ease',
-        backgroundColor: type === 'success' ? '#28a745' : '#dc3545',
-        color: 'white',
-      }}
-    >
-      <span>{message}</span>
+    <div className={`${style.toast} ${type === "success" ? style["toast--success"] : style["toast--error"]}`}>
+      <span className={style.toast__message}>{message}</span>
       <button 
         onClick={onClose}
-        style={{
-          background: 'none',
-          border: 'none',
-          color: 'white',
-          marginLeft: '10px',
-          cursor: 'pointer',
-          fontSize: '1.2rem',
-        }}
+        className={style.toast__close}
       >
         ×
       </button>
-      <style>{`
-        @keyframes slideIn {
-          from { transform: translateX(100%); opacity: 0; }
-          to { transform: translateX(0); opacity: 1; }
-        }
-      `}</style>
     </div>
   );
 }

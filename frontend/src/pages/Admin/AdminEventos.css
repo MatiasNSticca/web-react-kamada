@@ -8,13 +8,18 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
+  width: 60%;
 }
 
-.admin-eventos__header h1 {
-  margin: 0;
-  color: #333;
-  font-size: 1.8rem;
+.admin-eventos__header button {
+  width: auto;
 }
+
+
+/* .admin-eventos__header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+} */
 
 .loading {
   text-align: center;
@@ -109,6 +114,7 @@
 .btn-delete {
   padding: 8px 12px;
   font-size: 0.85rem;
+  border-radius: 4px;
 }
 
 .no-data {

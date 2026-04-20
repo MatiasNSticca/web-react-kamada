@@ -29,6 +29,10 @@
     color: var(--color-text-white);
 }
 
+.registro__error {
+    color: red;
+}
+
 @media (min-width: 600px) {
 
     .registro__form,

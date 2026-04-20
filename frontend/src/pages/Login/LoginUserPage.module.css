@@ -25,6 +25,10 @@
     gap: 12px;
 }
 
+.login__error {
+    color: red;
+}
+
 .login__container label {
     color: var(--color-text-white);
 }

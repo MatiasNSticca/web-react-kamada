@@ -124,7 +124,7 @@ function RegisterUserPage() {
           />
         </div>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p className={style.registro__error}>{error}</p>}
 
         <Button type="submit" variant="primary" disabled={loading}>
           {loading ? "Registrando..." : "Registrarme"}

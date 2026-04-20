@@ -14,10 +14,10 @@ function AdminSidebar({ isOpen, toggleMenu }) {
   };
 
   const navItems = [
-    { path: "/admin/productos", label: "Productos", icon: "📦" },
-    { path: "/admin/eventos", label: "Eventos", icon: "🎤" },
-    ...(isMaster ? [{ path: "/admin/usuarios", label: "Usuarios", icon: "👥" }] : []),
-    { path: "/admin/perfil", label: "Mi Perfil", icon: "👤" },
+    { path: "/admin/productos", label: "Productos", icon: "" },
+    { path: "/admin/eventos", label: "Eventos", icon: "" },
+    ...(isMaster ? [{ path: "/admin/usuarios", label: "Usuarios", icon: "" }] : []),
+    { path: "/admin/perfil", label: "Mi Perfil", icon: "" },
   ];
 
   return (
@@ -55,8 +55,8 @@ function AdminSidebar({ isOpen, toggleMenu }) {
         </nav>
 
         <div className="sidebar-footer">
-          <Button onClick={handleLogout} variant="secondary" className="logout-btn">
-            🚪 Cerrar Sesión
+          <Button onClick={handleLogout} variant="secondary" >
+          Cerrar Sesión
           </Button>
         </div>
       </aside>

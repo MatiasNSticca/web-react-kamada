@@ -87,7 +87,7 @@ function EditProductPage() {
   };
 
   if (loading) {
-    return <div style={{ padding: '20px', textAlign: 'center' }}>Cargando producto...</div>;
+    return <div className={style.crearproducto__loading}>Cargando producto...</div>;
   }
 
   return (
@@ -178,18 +178,18 @@ function EditProductPage() {
         </div>
 
         {successMessage && (
-          <p style={{ color: 'green', fontWeight: 'bold', padding: '10px', backgroundColor: '#d4edda', borderRadius: '5px' }}>
+          <p className={style.crearproducto__success}>
             {successMessage}
           </p>
         )}
 
         {errorProductById && (
-          <p style={{ color: 'red' }}>{errorProductById.message || errorProductById}</p>
+          <p className={style.crearproducto__error}>{errorProductById.message || errorProductById}</p>
         )}
 
-        {putError && <p style={{ color: 'red' }}>{putError.message || putError}</p>}
+        {putError && <p className={style.crearproducto__error}>{putError.message || putError}</p>}
 
-        <div style={{ display: 'flex', gap: '10px' }}>
+        <div className={style.crearproducto__actions}>
           <Button type="submit" variant="primary">
             Editar producto
           </Button>

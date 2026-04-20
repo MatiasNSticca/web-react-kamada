@@ -11,6 +11,10 @@
     z-index: 1000;
 }
 
+.nav__logo {
+    display: none;
+}
+
 .nav__logo img {
     width: 40px;
     height: auto;
@@ -35,8 +39,8 @@
 }
 
 .nav__toggle span {
-    width: 24px;
-    height: 2px;
+    width: 25px;
+    height: 4px;
     background-color: var(--color-text-black);
     border-radius: 2px;
     transition: all 0.3s ease;
@@ -52,7 +56,7 @@
 }
 
 .open span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
+    transform: rotate(-45deg) translate(8px, -8px);
 }
 
 /* PANEL LATERAL */
@@ -157,7 +161,6 @@
 /* Carrito a la derecha */
 .nav__cart {
     list-style: none;
-    margin-left: auto;
     padding-left: 1rem;
 }
 
@@ -165,10 +168,13 @@
 @media (min-width: 768px) {
     .nav {
         position: fixed;
-        width: 100dvw;
         justify-content: space-around;
         box-shadow: 0px 10px 100px 10px rgba(255, 255, 255, 0.219);
     }
+
+    .nav__logo {
+        display: flex;
+}
 
     .nav__toggle {
         display: none;

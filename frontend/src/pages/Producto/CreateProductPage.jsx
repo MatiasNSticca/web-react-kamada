@@ -145,14 +145,14 @@ function CreateProductPage() {
         </div>
 
         {successMessage && (
-          <p style={{ color: 'green', fontWeight: 'bold', padding: '10px', backgroundColor: '#d4edda', borderRadius: '5px' }}>
+          <p className={style.crearproducto__success}>
             {successMessage}
           </p>
         )}
 
-        {error && <p style={{ color: 'red' }}>{error.message}</p>}
+        {error && <p className={style.crearproducto__error}>{error.message}</p>}
 
-        <div style={{ display: 'flex', gap: '10px' }}>
+        <div className={style.crearproducto__actions}>
           <Button type="submit" variant="primary">
             Crear producto
           </Button>

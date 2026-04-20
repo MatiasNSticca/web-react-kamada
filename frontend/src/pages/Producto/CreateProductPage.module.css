@@ -48,3 +48,25 @@
         width: 50%;
     }
 }
+
+.crearproducto__loading {
+    padding: 20px;
+    text-align: center;
+}
+
+.crearproducto__success {
+    color: green;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #d4edda;
+    border-radius: 5px;
+}
+
+.crearproducto__error {
+    color: red;
+}
+
+.crearproducto__actions {
+    display: flex;
+    gap: 10px;
+}

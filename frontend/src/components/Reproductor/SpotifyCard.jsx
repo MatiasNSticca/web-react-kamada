@@ -12,7 +12,7 @@ function SpotifyCard() {
       </div>
       <div className={style.spotify__music}>
         <iframe
-          style={{ borderRadius: "12px" }}
+          className={style.spotify__iframe}
           src="https://open.spotify.com/embed/artist/5p3CzYVyNJ3qvuS6aXxo9R?utm_source=generator&theme=0"
           width="100%"
           height="152"

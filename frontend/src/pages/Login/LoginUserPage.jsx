@@ -79,7 +79,7 @@ function LoginUserPage() {
           />
         </div>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p className={style.login__error}>{error}</p>}
 
         <Button type="submit" variant="primary" disabled={loading}>
           {loading ? "Iniciando..." : "Iniciar sesión"}

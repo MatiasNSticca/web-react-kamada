@@ -78,7 +78,7 @@ function AdminEventos() {
       <div className="admin-eventos__header">
         <h1>Gestión de Eventos</h1>
         <Button variant="primary" onClick={handleCreate}>
-          + Crear Evento
+        Crear evento
         </Button>
       </div>
 
@@ -133,14 +133,14 @@ function AdminEventos() {
                       onClick={() => handleEdit(event)}
                       className="btn-edit"
                     >
-                      ✏️ Editar
+                    ✏️
                     </Button>
                     <Button 
                       variant="primary" 
                       onClick={() => handleDelete(event._id)}
                       className="btn-delete"
                     >
-                      🗑️ Eliminar
+                    🗑️
                     </Button>
                   </td>
                 </tr>

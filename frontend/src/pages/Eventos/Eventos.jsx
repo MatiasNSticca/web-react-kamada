@@ -87,7 +87,7 @@ function Eventos() {
 
           {activeEvents.length === 0 ? (
             <div className={style.eventos__cards}>
-              <p style={{ textAlign: 'center', color: '#666' }}>
+              <p className={style.eventos__empty}>
                 No hay eventos disponibles actualmente
               </p>
             </div>

@@ -5,19 +5,19 @@
   top: 15px;
   left: 15px;
   z-index: 1001;
-  background: #ff6b35;
+  background: var(--color-fill);
   border: none;
   border-radius: 5px;
   padding: 10px;
   cursor: pointer;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
 }
 
 .hamburger-btn span {
   display: block;
   width: 25px;
-  height: 3px;
+  height: 4px;
   background: white;
   border-radius: 2px;
   transition: all 0.3s ease;
@@ -39,8 +39,8 @@
 .admin-sidebar {
   width: 200px;
   min-height: 100vh;
-  background-color: #1a1a1a;
-  color: #fff;
+  background-color: var(--color-terceary);
+  color: var(--color-text-black);
   display: flex;
   flex-direction: column;
   padding: 60px 15px 20px;
@@ -61,21 +61,21 @@
 .sidebar-header h2 {
   margin: 0 0 10px 0;
   font-size: 1.5rem;
-  color: #ff6b35;
+  color: var(--color-primary);
 }
 
 .user-info {
   margin: 0;
   font-size: 0.9rem;
-  color: #ccc;
+  color: var(--color-text-black);
 }
 
 .user-role {
   display: inline-block;
   margin-top: 5px;
   padding: 3px 8px;
-  background-color: #ff6b35;
-  color: #fff;
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
   border-radius: 3px;
   font-size: 0.75rem;
 }
@@ -92,20 +92,19 @@
   align-items: center;
   gap: 12px;
   padding: 12px 15px;
-  color: #ccc;
+  color: var(--color-text-black);
   text-decoration: none;
   border-radius: 8px;
   transition: all 0.3s ease;
 }
 
 .nav-link:hover {
-  background-color: #333;
-  color: #fff;
+  background-color: var(--color-hover-terceary);
 }
 
 .nav-link.active {
-  background-color: #ff6b35;
-  color: #fff;
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
 }
 
 .nav-icon {
@@ -120,11 +119,6 @@
   margin-top: auto;
   padding-top: 20px;
   border-top: 1px solid #333;
-}
-
-.logout-btn {
-  width: 100%;
-  justify-content: flex-start;
 }
 
 /* Responsive */
