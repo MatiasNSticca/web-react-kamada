@@ -16,6 +16,13 @@ export const verifyToken = async (req, res, next) => {
       });
     }
 
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({
+        success: false,
+        message: 'JWT_SECRET no está configurada en el servidor'
+      });
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await User.findById(decoded.id);
