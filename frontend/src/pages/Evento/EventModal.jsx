@@ -52,15 +52,15 @@ function EventModal({ isOpen, onClose, event, onSuccess }) {
 
   // Solo dependencias necesarias - sin loadEventData ni initialForm
   useEffect(() => {
-    if (isOpen) {
-      if (event) {
-        loadEventData(event._id);
-      } else {
-        setForm(INITIAL_EVENT_FORM);
-      }
+    if (!isOpen) return;
+    
+    if (event) {
+      loadEventData(event._id);
+    } else {
+      setForm(INITIAL_EVENT_FORM);
       setSuccessMessage("");
     }
-  }, [isOpen, event, loadEventData]);
+  }, [isOpen, event]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
