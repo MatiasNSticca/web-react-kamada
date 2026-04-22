@@ -8,34 +8,36 @@ function useLogin() {
         setError(null)
 
         try {
-            // buena practicar para validar la API
             if(!API_URL) {
                 throw new Error("Ingrese envs")
             }
 
-            const response = await fetch(`${API_URL}users`)
+            const response = await fetch(`${API_URL}/auth/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            })
 
             if(!response.ok){
-                throw new Error("Error al iniciar sesion", response.status)
+                const errorData = await response.json()
+                throw new Error(errorData.message || "Credenciales incorrectas")
             }
 
             const data = await response.json()
 
-            const user = data.find((user) => 
-                user.email.trim().toLowerCase() === email.trim().toLowerCase() && user.password.trim() === password.trim())
-
-            if(!user) {
-                setError("Credenciales incorrectas")
-                return null
+            if (data.success && data.token) {
+                localStorage.setItem("auth_token", data.token)
+                localStorage.setItem("user", JSON.stringify(data.user))
+                return data.user
+            } else {
+                throw new Error(data.message || "Credenciales incorrectas")
             }
-
-            const { password: _, ...userWithoutPassword } = user
-            
-            return userWithoutPassword
 
         } catch (error) {
             console.error(error)
-            setError("Error al conectar con el servidor", error)
+            setError(error.message || "Error al conectar con el servidor")
             return null
         }
     }
