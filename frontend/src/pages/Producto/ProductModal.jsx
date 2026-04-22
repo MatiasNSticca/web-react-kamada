@@ -61,7 +61,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
       [name]: type === "checkbox" ? checked : type === "number" ? parseInt(value) || 0 : value,
     }));
   };
-  };
 
   const handleSubmit = async () => {
     setSuccessMessage("");
