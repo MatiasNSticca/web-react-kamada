@@ -44,6 +44,7 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
   }, [getProductById]);
 
   useEffect(() => {
+    console.log('[DEBUG] ProductModal useEffect executed! isOpen:', isOpen, 'product:', product);
     if (isOpen) {
       if (product) {
         loadProductData(product._id);
@@ -55,11 +56,15 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
   }, [isOpen, product, loadProductData]);
 
   const handleInputChange = (e) => {
+    console.log('[DEBUG] handleInputChange called!', e.target.name, e.target.value);
     const { name, value, type, checked } = e.target;
-    setForm(prev => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : type === "number" ? parseInt(value) || 0 : value,
-    }));
+    setForm(prev => {
+      console.log('[DEBUG] setForm prev:', prev);
+      return {
+        ...prev,
+        [name]: type === "checkbox" ? checked : type === "number" ? parseInt(value) || 0 : value,
+      };
+    });
   };
 
   const handleSubmit = async () => {
