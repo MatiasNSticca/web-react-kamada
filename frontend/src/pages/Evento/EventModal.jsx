@@ -8,6 +8,8 @@ import Toast from "../../components/ui/Toast/Toast";
 import "./EventModal.css";
 
 function EventModal({ isOpen, onClose, event, onSuccess }) {
+  console.log('[DEBUG] EventModal rendered - isOpen:', isOpen, 'event:', event);
+  
   const { error: postError, postEvent } = usePostEvent();
   const { error: putError, putEvent } = usePutEvent();
   const { getEventById } = useGetEventById();
@@ -31,7 +33,9 @@ function EventModal({ isOpen, onClose, event, onSuccess }) {
   const [successMessage, setSuccessMessage] = useState("");
 
   const loadEventData = async (eventId) => {
+    console.log('[DEBUG] loadEventData called with:', eventId);
     const data = await getEventById(eventId);
+    console.log('[DEBUG] loadEventData got data:', data);
     if (data) {
       setForm({
         title: data.title || "",
@@ -48,7 +52,10 @@ function EventModal({ isOpen, onClose, event, onSuccess }) {
     }
   };
 
+  console.log('[DEBUG] EventModal useEffect deps:', { isOpen, event: !!event, loadEventData: !!loadEventData });
+
   useEffect(() => {
+    console.log('[DEBUG] EventModal useEffect triggered - isOpen:', isOpen, 'event:', event);
     if (isOpen) {
       if (event) {
         loadEventData(event._id);

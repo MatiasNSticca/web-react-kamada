@@ -9,6 +9,8 @@ import Toast from "../../components/ui/Toast/Toast";
 import "./ProductModal.css";
 
 function ProductModal({ isOpen, onClose, product, onSuccess }) {
+  console.log('[DEBUG] ProductModal rendered - isOpen:', isOpen, 'product:', product);
+  
   const { categories } = useGetCategories();
   const { error: postError, postProduct } = usePostProduct();
   const { error: putError, putProduct } = usePutProduct();
@@ -30,7 +32,9 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
   const [successMessage, setSuccessMessage] = useState("");
 
   const loadProductData = async (productId) => {
+    console.log('[DEBUG] loadProductData called with:', productId);
     const data = await getProductById(productId);
+    console.log('[DEBUG] loadProductData got data:', data);
     if (data) {
       setForm({
         name: data.name || "",
@@ -44,7 +48,10 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
     }
   };
 
+  console.log('[DEBUG] useEffect dependencies:', { isOpen, product: !!product, loadProductData: !!loadProductData, initialForm });
+
   useEffect(() => {
+    console.log('[DEBUG] useEffect triggered - isOpen:', isOpen, 'product:', product);
     if (isOpen) {
       if (product) {
         loadProductData(product._id);
