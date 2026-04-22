@@ -64,10 +64,10 @@ function EventModal({ isOpen, onClose, event, onSuccess }) {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm({
-      ...form,
+    setForm(prev => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : type === "number" ? parseInt(value) || 0 : value,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
