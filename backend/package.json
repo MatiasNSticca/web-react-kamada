@@ -10,7 +10,8 @@
     "lint": "node --check index.js",
     "create-master": "node scripts/createMaster.js",
     "seed-categories": "node scripts/seedCategories.js",
-    "promote": "node scripts/promoteToMaster.js"
+    "promote": "node scripts/promoteToMaster.js",
+    "create-master-remote": "node scripts/createMasterRemote.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
