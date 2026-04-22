@@ -111,30 +111,15 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="modal-body">
-            <Input
-              label="Nombre"
-              LabelId="name"
-              name="name"
-              type="text"
-              onChange={handleInputChange}
-              value={form.name}
-              isRequired={true}
-              placeholder="Nombre del producto"
+          <div className="modal-body" onClick={() => console.log('[DEBUG] modal-body clicked')}>
+            <input 
+              type="text" 
+              name="test_direct"
+              placeholder="TEST DIRECT INPUT - click here"
+              onChange={(e) => alert('Input clicked! Value: ' + e.target.value)}
+              style={{border: '3px solid blue', padding: '15px', margin: '10px', display: 'block'}}
             />
             
-            {/* DEBUG: Input HTML nativo para probar */}
-            <div style={{border: '2px dashed red', padding: '10px', margin: '10px 0'}}>
-              <label>DEBUG - Input nativo (HTML)</label>
-              <input 
-                type="text"
-                name="debug_name"
-                value={form.name}
-                onChange={(e) => console.log('[DEBUG] HTML input changed:', e.target.value)}
-                style={{display: 'block', width: '100%', padding: '10px', marginTop: '5px'}}
-              />
-            </div>
-
             <Input
               label="Imagen URL"
               LabelId="image"
