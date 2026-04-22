@@ -19,7 +19,6 @@ function useGetCategories() {
            }
 
 const data = await response.json()
-            console.log('[DEBUG] categories response:', data);
             setCategories(data.data || data || [])
         } catch (error) {
             console.error(error)
