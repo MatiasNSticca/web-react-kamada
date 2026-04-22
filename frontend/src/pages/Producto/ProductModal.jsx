@@ -59,12 +59,15 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
   }, [isOpen, product, loadProductData]);
 
   const handleInputChange = (e) => {
+    console.log('[DEBUG] handleInputChange called:', e.target.name, e.target.value);
     const { name, value, type, checked } = e.target;
     setForm({
       ...form,
       [name]: type === "checkbox" ? checked : type === "number" ? parseInt(value) || 0 : value,
     });
   };
+  
+  console.log('[DEBUG] form state:', form);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -119,6 +122,18 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
               isRequired={true}
               placeholder="Nombre del producto"
             />
+            
+            {/* DEBUG: Input HTML nativo para probar */}
+            <div style={{border: '2px dashed red', padding: '10px', margin: '10px 0'}}>
+              <label>DEBUG - Input nativo (HTML)</label>
+              <input 
+                type="text"
+                name="debug_name"
+                value={form.name}
+                onChange={(e) => console.log('[DEBUG] HTML input changed:', e.target.value)}
+                style={{display: 'block', width: '100%', padding: '10px', marginTop: '5px'}}
+              />
+            </div>
 
             <Input
               label="Imagen URL"
