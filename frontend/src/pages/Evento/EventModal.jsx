@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Input from "../../components/ui/Inputs/Input";
 import Button from "../../components/ui/Button/Button";
 import usePostEvent from "../../hooks/events/usePostEvent";
@@ -7,35 +7,33 @@ import useGetEventById from "../../hooks/events/useGetEventById";
 import Toast from "../../components/ui/Toast/Toast";
 import "./EventModal.css";
 
+// Definir initialForm FUERA del componente para evitar re-renders
+const INITIAL_EVENT_FORM = {
+  title: "",
+  description: "",
+  date: "",
+  location: "",
+  venue: "",
+  image: "",
+  price: 0,
+  ticketsAvailable: 0,
+  category: "recital",
+  active: true,
+};
+
 function EventModal({ isOpen, onClose, event, onSuccess }) {
-  console.log('[DEBUG] EventModal rendered - isOpen:', isOpen, 'event:', event);
-  
   const { error: postError, postEvent } = usePostEvent();
   const { error: putError, putEvent } = usePutEvent();
   const { getEventById } = useGetEventById();
 
   const isEditing = !!event;
 
-  const initialForm = {
-    title: "",
-    description: "",
-    date: "",
-    location: "",
-    venue: "",
-    image: "",
-    price: 0,
-    ticketsAvailable: 0,
-    category: "recital",
-    active: true,
-  };
-
-  const [form, setForm] = useState(initialForm);
+  const [form, setForm] = useState(INITIAL_EVENT_FORM);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const loadEventData = async (eventId) => {
-    console.log('[DEBUG] loadEventData called with:', eventId);
+  // Envolver en useCallback para evitar recreation en cada render
+  const loadEventData = useCallback(async (eventId) => {
     const data = await getEventById(eventId);
-    console.log('[DEBUG] loadEventData got data:', data);
     if (data) {
       setForm({
         title: data.title || "",
@@ -50,21 +48,19 @@ function EventModal({ isOpen, onClose, event, onSuccess }) {
         active: data.active ?? true,
       });
     }
-  };
+  }, [getEventById]);
 
-  console.log('[DEBUG] EventModal useEffect deps:', { isOpen, event: !!event, loadEventData: !!loadEventData });
-
+  // Solo dependencias necesarias - sin loadEventData ni initialForm
   useEffect(() => {
-    console.log('[DEBUG] EventModal useEffect triggered - isOpen:', isOpen, 'event:', event);
     if (isOpen) {
       if (event) {
         loadEventData(event._id);
       } else {
-        setForm(initialForm);
+        setForm(INITIAL_EVENT_FORM);
       }
       setSuccessMessage("");
     }
-  }, [isOpen, event, loadEventData, initialForm]);
+  }, [isOpen, event, loadEventData]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;

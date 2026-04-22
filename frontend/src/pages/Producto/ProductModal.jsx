@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Input from "../../components/ui/Inputs/Input";
 import Button from "../../components/ui/Button/Button";
 import usePostProduct from "../../hooks/products/usePostProduct";
@@ -8,9 +8,18 @@ import useGetProductById from "../../hooks/products/useGetProductById";
 import Toast from "../../components/ui/Toast/Toast";
 import "./ProductModal.css";
 
+// Definir initialForm FUERA del componente para evitar re-renders
+const INITIAL_PRODUCT_FORM = {
+  name: "",
+  description: "",
+  image: "",
+  category: "",
+  price: 0,
+  stock: 0,
+  available: true,
+};
+
 function ProductModal({ isOpen, onClose, product, onSuccess }) {
-  console.log('[DEBUG] ProductModal rendered - isOpen:', isOpen, 'product:', product);
-  
   const { categories } = useGetCategories();
   const { error: postError, postProduct } = usePostProduct();
   const { error: putError, putProduct } = usePutProduct();
@@ -18,23 +27,12 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
 
   const isEditing = !!product;
 
-  const initialForm = {
-    name: "",
-    description: "",
-    image: "",
-    category: "",
-    price: 0,
-    stock: 0,
-    available: true,
-  };
-
-  const [form, setForm] = useState(initialForm);
+  const [form, setForm] = useState(INITIAL_PRODUCT_FORM);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const loadProductData = async (productId) => {
-    console.log('[DEBUG] loadProductData called with:', productId);
+  // Envolver en useCallback para evitar recreation en cada render
+  const loadProductData = useCallback(async (productId) => {
     const data = await getProductById(productId);
-    console.log('[DEBUG] loadProductData got data:', data);
     if (data) {
       setForm({
         name: data.name || "",
@@ -46,21 +44,19 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
         available: data.available ?? true,
       });
     }
-  };
+  }, [getProductById]);
 
-  console.log('[DEBUG] useEffect dependencies:', { isOpen, product: !!product, loadProductData: !!loadProductData, initialForm });
-
+  // Solo зависиencias necesarias - sin loadProductData ni initialForm
   useEffect(() => {
-    console.log('[DEBUG] useEffect triggered - isOpen:', isOpen, 'product:', product);
     if (isOpen) {
       if (product) {
         loadProductData(product._id);
       } else {
-        setForm(initialForm);
+        setForm(INITIAL_PRODUCT_FORM);
       }
       setSuccessMessage("");
     }
-  }, [isOpen, product, loadProductData, initialForm]);
+  }, [isOpen, product, loadProductData]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
