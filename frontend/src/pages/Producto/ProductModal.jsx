@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Input from "../../components/ui/Inputs/Input";
 import Button from "../../components/ui/Button/Button";
 import usePostProduct from "../../hooks/products/usePostProduct";
 import usePutProduct from "../../hooks/products/usePutProduct";
@@ -8,7 +7,6 @@ import useGetProductById from "../../hooks/products/useGetProductById";
 import Toast from "../../components/ui/Toast/Toast";
 import "./ProductModal.css";
 
-// Definir initialForm FUERA del componente para evitar re-renders
 const INITIAL_PRODUCT_FORM = {
   name: "",
   description: "",
@@ -30,7 +28,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
   const [form, setForm] = useState(INITIAL_PRODUCT_FORM);
   const [successMessage, setSuccessMessage] = useState("");
 
-  // Envolver en useCallback para evitar recreation en cada render
   const loadProductData = useCallback(async (productId) => {
     const data = await getProductById(productId);
     if (data) {
@@ -46,7 +43,6 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
     }
   }, [getProductById]);
 
-  // Solo зависиencias necesarias - sin loadProductData ni initialForm
   useEffect(() => {
     if (isOpen) {
       if (product) {
@@ -59,18 +55,14 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
   }, [isOpen, product, loadProductData]);
 
   const handleInputChange = (e) => {
-    console.log('[DEBUG] handleInputChange called:', e.target.name, e.target.value);
     const { name, value, type, checked } = e.target;
-    setForm({
-      ...form,
+    setForm(prev => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : type === "number" ? parseInt(value) || 0 : value,
-    });
+    }));
   };
-  
-  console.log('[DEBUG] form state:', form);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setSuccessMessage("");
 
     if (!form.category) {
@@ -110,119 +102,134 @@ function ProductModal({ isOpen, onClose, product, onSuccess }) {
           <button className="modal-close" onClick={onClose}>&times;</button>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="modal-body" onClick={() => console.log('[DEBUG] modal-body clicked')}>
-            <input 
-              type="text" 
-              name="test_direct"
-              placeholder="TEST DIRECT INPUT - click here"
-              onChange={(e) => alert('Input clicked! Value: ' + e.target.value)}
-              style={{border: '3px solid blue', padding: '15px', margin: '10px', display: 'block'}}
-            />
-            
-            <Input
-              label="Imagen URL"
-              LabelId="image"
-              name="image"
+        <div className="modal-body">
+          {/* Nombre */}
+          <div className="form-group">
+            <label htmlFor="name">Nombre *</label>
+            <input
               type="text"
+              name="name"
+              id="name"
+              value={form.name}
               onChange={handleInputChange}
+              required
+              placeholder="Nombre del producto"
+            />
+          </div>
+
+          {/* Imagen URL */}
+          <div className="form-group">
+            <label htmlFor="image">Imagen URL *</label>
+            <input
+              type="text"
+              name="image"
+              id="image"
               value={form.image}
-              isRequired={true}
+              onChange={handleInputChange}
+              required
               placeholder="URL de la imagen"
             />
+          </div>
 
-            {form.image && (
-              <div className="image-preview">
-                <img src={form.image} alt="Preview" />
-              </div>
-            )}
-
-            <div className="form-group">
-              <label htmlFor="description">Descripción</label>
-              <textarea
-                name="description"
-                id="description"
-                onChange={handleInputChange}
-                value={form.description}
-                placeholder="Descripción del producto"
-                rows="3"
-              />
+          {form.image && (
+            <div className="image-preview">
+              <img src={form.image} alt="Preview" />
             </div>
+          )}
 
+          {/* Descripción */}
+          <div className="form-group">
+            <label htmlFor="description">Descripción</label>
+            <textarea
+              name="description"
+              id="description"
+              value={form.description}
+              onChange={handleInputChange}
+              placeholder="Descripción del producto"
+              rows="3"
+            />
+          </div>
+
+          {/* Categoría */}
+          <div className="form-group">
+            <label htmlFor="category">Categoría *</label>
+            <select
+              name="category"
+              id="category"
+              value={form.category}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="">Selecciona una categoría</option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Precio y Stock */}
+          <div className="form-row">
             <div className="form-group">
-              <label htmlFor="category">Categoría *</label>
-              <select
-                name="category"
-                id="category"
-                value={form.category}
+              <label htmlFor="price">Precio *</label>
+              <input
+                type="number"
+                name="price"
+                id="price"
+                value={form.price}
                 onChange={handleInputChange}
                 required
-              >
-                <option value="">Selecciona una categoría</option>
-                {categories.map((cat) => (
-                  <option key={cat._id} value={cat._id}>
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
 
-            <div className="form-row">
-              <Input
-                label="Precio"
-                LabelId="price"
-                name="price"
+            <div className="form-group">
+              <label htmlFor="stock">Stock *</label>
+              <input
                 type="number"
-                onChange={handleInputChange}
-                value={form.price}
-                isRequired={true}
-              />
-
-              <Input
-                label="Stock"
-                LabelId="stock"
                 name="stock"
-                type="number"
-                onChange={handleInputChange}
+                id="stock"
                 value={form.stock}
-                isRequired={true}
+                onChange={handleInputChange}
+                required
               />
             </div>
+          </div>
 
-            <div className="form-group checkbox-group">
-              <label>
-                <input
-                  type="checkbox"
-                  name="available"
-                  checked={form.available}
-                  onChange={handleInputChange}
-                />
-                Disponible para la venta
-              </label>
-            </div>
-
-            {successMessage && (
-              <Toast message={successMessage} type="success" onClose={() => setSuccessMessage("")} />
-            )}
-
-            {(postError || putError) && (
-              <Toast 
-                message={postError?.message || putError?.message} 
-                type="error" 
-                onClose={() => {}} 
+          {/* Disponibilidad */}
+          <div className="form-group checkbox-group">
+            <label>
+              <input
+                type="checkbox"
+                name="available"
+                checked={form.available}
+                onChange={handleInputChange}
               />
-            )}
+              Disponible para la venta
+            </label>
           </div>
 
-          <div className="modal-footer">
-            <Button type="button" variant="secondary" onClick={onClose}>
-              Cancelar
-            </Button>
-            <Button type="submit" variant="primary">
-              {isEditing ? "Guardar Cambios" : "Crear Producto"}
-            </Button>
-          </div>
-        </form>
+          {successMessage && (
+            <Toast message={successMessage} type="success" onClose={() => setSuccessMessage("")} />
+          )}
+
+          {(postError || putError) && (
+            <Toast 
+              message={postError?.message || putError?.message} 
+              type="error" 
+              onClose={() => {}} 
+            />
+          )}
+        </div>
+
+        <div className="modal-footer">
+          <Button type="button" variant="secondary" onClick={onClose}>
+            Cancelar
+          </Button>
+          <Button type="button" variant="primary" onClick={handleSubmit}>
+            {isEditing ? "Guardar Cambios" : "Crear Producto"}
+          </Button>
+        </div>
       </div>
     </div>
   );
