@@ -18,8 +18,9 @@ function useGetCategories() {
                 throw new Error(`HTTP error status: ${response.status}`)
            }
 
-           const data = await response.json()
-           setCategories(data.data || [])
+const data = await response.json()
+            console.log('[DEBUG] categories response:', data);
+            setCategories(data.data || data || [])
         } catch (error) {
             console.error(error)
             setError(error)
