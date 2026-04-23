@@ -1,0 +1,30 @@
+[
+  {
+    "name": "merch",
+    "description": "Merchandising de la banda",
+    "active": true,
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "name": "discos",
+    "description": "Álbumes y CDs",
+    "active": true,
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "name": "accesorios",
+    "description": "Accesorios varios",
+    "active": true,
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "name": "otros",
+    "description": "Otros productos",
+    "active": true,
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  }
+]
